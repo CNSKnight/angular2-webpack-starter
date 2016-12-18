@@ -4,16 +4,20 @@
 
 // Look in ./config folder for webpack.dev.js
 switch (process.env.NODE_ENV) {
-  case 'prod':
-  case 'production':
-    module.exports = require('./config/webpack.prod')({env: 'production'});
-    break;
-  case 'test':
-  case 'testing':
-    module.exports = require('./config/webpack.test')({env: 'test'});
-    break;
-  case 'dev':
-  case 'development':
-  default:
-    module.exports = require('./config/webpack.dev')({env: 'development'});
+    case 'prod':
+    case 'production':
+        module.exports = require('./config/webpack.prod')({ env: 'production' });
+        break;
+    case 'test':
+    case 'testing':
+        module.exports = require('./config/webpack.test')({ env: 'test' });
+        break;
+    case 'dev':
+    case 'development':
+        break;
+    case 'plug':
+    case 'plugin':
+        module.exports = require('./config/webpack.plug')({ env: 'plugin' });
+    default:
+        module.exports = require('./config/webpack.dev')({ env: 'development' });
 }

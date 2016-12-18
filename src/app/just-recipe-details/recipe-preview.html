@@ -1,0 +1,44 @@
+<div *ngIf="recipe && recipe.id" class="modal-content">
+    <h1>{{recipe.title}}</h1>
+    <h2 *ngIf="recipe.subTitle">{{recipe.subTitle}}</h2>
+    <h3>Recipe ID: {{recipe.id}}</h3> 
+    <div class="col s12 light-green lighten-3">
+        <p class="left" *ngIf="recipe.creator">Created By: {{recipe.creator}}</p>
+        <p class="right" *ngIf="recipe.published">Published</p>
+        <p class="right" *ngIf="! recipe.published">Un-Published</p>
+    </div>
+    <p *ngIf="recipe.description">{{recipe.description}}</p>
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Qty</th>
+                <th>Units</th>
+                <th>Ingredient</th>
+                <th>Prep</th>
+                <th>Optional</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ingredient of recipe.ingredients;">
+                <td>{{ingredient.qty}}</td>
+                <td>{{ingredient.unit}}</td>
+                <td>{{ingredient.name}}</td>
+                <td>{{ingredient.preparation}}</td>
+                <td><i class="material-icons light-green-text" *ngIf="ingredient.optional">check</i></td>
+            </tr>
+        </tbody>
+    </table>
+    <dl *ngFor="let method of recipe.method;">
+        <dt>Step {{method.step}}:</dt>
+        <dd>{{method.text}}</dd>
+    </dl>
+    <p *ngIf="recipe.tags.length">
+        <span *ngFor="let tag of recipe.tags;" class="chip light-green lighten-3">#{{tag.text}}</span>
+    </p>
+</div>
+<div class="modal-footer align-center">
+    <p class="left">
+        <i class="material-icons amber-text text-accent-4 left">warning</i>Note:
+        This preview will not reflect any unsaved changes.</p>
+    <a class="btn-flat modal-close"><i class="material-icons left">close</i> Dismiss</a>
+</div>

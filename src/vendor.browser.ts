@@ -21,6 +21,11 @@ import '@angularclass/hmr';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
+// project
+import 'angular2-materialize';
+import '@ngrx/store';
+import 'hammerjs/hammer.min';
+
 if ('production' === ENV) {
   // Production
 

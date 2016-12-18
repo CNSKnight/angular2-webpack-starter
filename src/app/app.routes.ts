@@ -5,6 +5,7 @@ import { NoContentComponent } from './no-content';
 
 import { DataResolver } from './app.resolver';
 
+import { RecipesRoutes } from './just-recipe-details/recipes.routes';
 
 export const ROUTES: Routes = [
   { path: '',      component: HomeComponent },
@@ -16,5 +17,6 @@ export const ROUTES: Routes = [
     })
     ,
   },
+  ...RecipesRoutes,
   { path: '**',    component: NoContentComponent },
 ];

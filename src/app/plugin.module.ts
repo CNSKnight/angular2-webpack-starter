@@ -9,15 +9,11 @@ import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularcla
  * Platform and Environment providers/directives/pipes
  */
 import { ENV_PROVIDERS } from './environment';
-import { ROUTES } from './app.routes';
+import { ROUTES } from './plugin.routes';
 // App is our top level component
-import { AppComponent } from './app.component';
+import { PluginComponent } from './plugin.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
-import { AboutComponent } from './about';
-import { NoContentComponent } from './no-content';
-import { XLarge } from './home/x-large';
 
 import 'materialize-css';
 import { MaterializeModule } from 'angular2-materialize';
@@ -28,6 +24,7 @@ import { recipesReducer } from './just-recipe-details/services/recipes.reducer';
 import { selectedRecipeReducer } from './just-recipe-details/services/selected-recipe.reducer';
 import { RecipeDetailsModule } from './just-recipe-details/recipe-details.module';
 
+import {BodyObserver} from './bodyObserver.directive';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -41,16 +38,13 @@ type StoreType = {
 };
 
 /**
- * `AppModule` is the main entry point into Angular2's bootstraping process
+ * `App/PluginModule` is the main/plugin entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ AppComponent],
+  bootstrap: [ PluginComponent],
   declarations: [
-    AppComponent,
-    AboutComponent,
-    HomeComponent,
-    NoContentComponent,
-    XLarge
+    PluginComponent,
+    BodyObserver
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -71,7 +65,7 @@ type StoreType = {
     RecipeDetailsModule
   ]
 })
-export class AppModule {
+export class PluginModule {
   constructor(public appRef: ApplicationRef, public appState: AppState) {}
 
   hmrOnInit(store: StoreType) {
@@ -110,4 +104,3 @@ export class AppModule {
   }
 
 }
-

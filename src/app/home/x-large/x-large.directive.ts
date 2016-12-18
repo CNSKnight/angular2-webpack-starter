@@ -16,3 +16,4 @@ export class XLarge {
     renderer.setElementStyle(element.nativeElement, 'fontSize', 'x-large');
   }
 }
+

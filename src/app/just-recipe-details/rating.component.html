@@ -1,0 +1,7 @@
+<div class="row" *ngIf="1==2">
+    <div class="input-field col s12">
+        <rating-comp [interactive]="true" [rate]="recipe.rating" (changeRate)="onChangeRate($event)"></rating-comp>
+        <input name="rating" [(ngModel)]="recipe.rating" placeholder="Rating" type="text">
+        <label>Rating</label>
+    </div>
+</div>

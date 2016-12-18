@@ -1,0 +1,67 @@
+.mb-sm {
+  margin-bottom: 0.5rem;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+.secondary-content.left {
+  margin-right: 0.5em;
+}
+.action-bar i.medium {
+  font-size: 1.2em;
+}
+.recipes.collection .collection-item,
+.recipes.collection .card {
+  border-left: 5px solid transparent;
+  /*padding-left: 25px*/;
+  cursor: pointer;
+}
+.recipes.collection .collection-item.active,
+.recipes.collection .card.active {
+  border-left-color: rgb(0, 150, 136);
+}
+.recipes.collection .collection-item.active {
+  background: inherit;
+}
+.recipes.collection .collection-item.active,
+.recipes.collection .collection-item.active .secondary-content {
+  color: rgb(0, 150, 136);
+}
+legend, .legend {
+  color: rgb(0, 150, 136);
+}
+.recipe-card [ngmodelgroup] + [ngmodelgroup] {
+  border-top: 3px solid rgb(178, 223, 219);
+}
+.recipe-card fieldset .row {
+  margin-bottom: 0;
+}
+.recipe-card fieldset .row:last-child {
+  margin-bottom: 0.5rem;
+}
+recipes .modal {
+  max-height: 97%;
+}
+.modal-footer p {
+  line-height: 2em;
+  padding: 0 1em;
+}

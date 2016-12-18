@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html 🆖>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        Recipe Details Module
+    </title>
+    <base href="/RecipeDetails/">
+    <!--base href="/"-->
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" type="text/javascript" defer></script>
+    <script src="dist/polyfills.d83a06568c4f3ed9ef69.bundle.js" type="text/javascript" defer></script>
+    <script src="dist/vendor.fa53b0d0d3d3ae3524b3.bundle.js" type="text/javascript" defer></script>
+    <script src="dist/plugin.712aaf53e28435a64107.bundle.js" type="text/javascript" defer></script>
+</head>
+
+<body>
+    <plugin>Loading</plugin>
+</body>
+<script>
+    (function(parent) {
+        if (!"MutationObserver" in window) return;
+        try {
+            var details = parent.acap.ADMIN_TAPPADS.contUnitsMgr.details;
+            var lastHgt;
+            if (details) {
+                details.onMuts = function(mutation) {
+                    var hgt = document.body.clientHeight;
+                    if (hgt < 900 || lastHgt == hgt) return; // matches parent container min-height;
+                    details.setIframeWrapperHgt(hgt + 10);
+                    lastHgt = hgt;
+                };
+
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(details.onMuts);
+                });
+
+                observer.observe(document.body, {
+                    childList: true,
+                    subTree: true
+                });
+            }
+        } catch (except) {
+            console.log(except.message);
+        }
+    })(window.parent);
+</script>
+
+</html>
