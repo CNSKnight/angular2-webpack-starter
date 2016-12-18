@@ -2,7 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -44,7 +44,7 @@ type StoreType = {
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ AppComponent],
+  bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
     AboutComponent,
@@ -56,7 +56,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true }),
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy:PreloadAllModules }),
     RecipeDetailsModule,
     StoreModule.provideStore({
       recipesR: recipesReducer,
