@@ -19,7 +19,6 @@ import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLarge } from './home/x-large';
 
-import 'materialize-css';
 import { MaterializeModule } from 'angular2-materialize';
 
 import { StoreModule } from '@ngrx/store';
@@ -56,7 +55,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy:PreloadAllModules }),
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     RecipeDetailsModule,
     StoreModule.provideStore({
       recipesR: recipesReducer,

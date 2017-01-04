@@ -54,7 +54,6 @@ export class RecipeService {
   // used outside of listing context to load a single
   // @return Subscribable
   loadRecipe(id?: number) {
-    debugger;
     let info;
     if (!id) {
       info = this.contUnitsMgr && this.contUnitsMgr.getInfo();
@@ -69,8 +68,8 @@ export class RecipeService {
     }
 
     if (id) {
-      return this.http.get(this.apiBase + '/?acapID=' + id )
-        .catch((error: any) => Observable.throw('load recipe request error: ' + error.json().error || '""'))
+      return this.http.get(this.apiBase + '/findOne?filter={"where":{"acapID":'+ id +'}}')
+        .catch((error: any) => Observable.throw('load recipe request error: ' + error.json().error.message || '""'))
         .map((res: Response) => res.json())
         .map(payload => (info && (payload.title = info.ad_unit_name), payload))
         .map(payload => ({ type: 'SELECT_RECIPE', payload }))
@@ -81,7 +80,7 @@ export class RecipeService {
   // used w/in listing context to load all
   loadRecipes() {
     return this.http.get(this.apiBase)
-      .catch((error: any) => Observable.throw('load recipes request error: ' + error.json().error || '""'))
+      .catch((error: any) => Observable.throw('load recipes request error: ' + error.json().error.message || '""'))
       // map the `HTTP` response from `raw` to `JSON` format
       // using `RxJs`
       // Reference: https://github.com/Reactive-Extensions/RxJS
@@ -100,9 +99,16 @@ export class RecipeService {
   }
 
   createRecipe(recipe: RecipeI) {
+    let info = this.contUnitsMgr && this.contUnitsMgr.getInfo();
+    if (! info) {
+        return this.contUnitsMgr.setMessages('<p>Save failed! I didn\'t get acapF cont-unit info?');
+    }
     recipe.id && (delete recipe.id);
+    recipe.acapID = info.ad_unit_id;
+    recipe.title = info.ad_unit_name;
+
     this.http.post(this.apiBase, JSON.stringify(recipe), HEADER)
-      .catch((error: any) => Observable.throw('create recipe request error: ' + error.json().error || '""'))
+      .catch((error: any) => Observable.throw('create recipe request error: ' + error.json().error.message || '""'))
       .map(res => res.json())
       .map(payload => ({ type: 'CREATE_RECIPE', payload }))
       .subscribe(action => this.store.dispatch(action));

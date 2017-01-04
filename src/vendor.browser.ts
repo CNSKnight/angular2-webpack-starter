@@ -22,13 +22,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 // project
+import 'materialize-css';
 import 'angular2-materialize';
+
 import '@ngrx/store';
 import 'hammerjs/hammer.min';
 
+import 'rx-dom';
+
 if ('production' === ENV) {
   // Production
-
 
 } else {
   // Development

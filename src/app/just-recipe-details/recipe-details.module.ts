@@ -10,6 +10,8 @@ import { RecipeService } from './services/recipe.service';
 import { recipesComps } from './recipes.comps';
 // import { recipesReducer } from './services/recipes.reducer';
 
+import { RecipeCardObserver } from './recipeCardObserver.directive';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -17,7 +19,8 @@ import { recipesComps } from './recipes.comps';
         MaterializeModule
     ],
     declarations: [
-        ...recipesComps
+        ...recipesComps,
+        RecipeCardObserver
     ],
     exports: [...recipesComps, MaterializeModule],
     providers: [

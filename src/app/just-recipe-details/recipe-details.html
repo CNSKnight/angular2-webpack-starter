@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input name="description" [(ngModel)]="recipe.description" placeholder="Brief and Catchy Description" type="text">
+                <textarea class="materialize-textarea" name="description" placeholder="Brief and Catchy Description" rows="2" [(ngModel)]="recipe.description"></textarea>
                 <label>Description</label>
             </div>
         </div>
@@ -52,6 +52,14 @@
         <div class="row">
             <fieldset class="col s12">
                 <legend>Ingredients</legend>
+                <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+                    <li *ngFor="let value of values">
+                        <div class="collapsible-header">Common Measures, Units, and Abbreviations</div>
+                        <div class="collapsible-body">
+                            <p>{{value}}</p>
+                        </div>
+                    </li>
+                </ul>
                 <div *ngFor="let ingredient of recipe.ingredients; let idx = index;" ngModelGroup="ingredients">
                     <div class="row">
                         <div class="input-field col s6 m3">
@@ -138,9 +146,7 @@
         </div>
         <div class="row">
             <div class="col s4 center-align">
-                <button class="btn-flat" type="button" (click)="cancelUA.emit(recipe)">
-          Cancel
-        </button>
+                <button class="btn-flat" type="button" (click)="cancelUA.emit(recipe)">Cancel</button>
             </div>
             <div class="col s4 center-align">
                 <button *ngIf="recipe.id" type="button" class="btn waves-effect waves-light light-green lighten-3 modal-trigger" data-target="#rPrevModal" (click)="openModal()">Preview</button>

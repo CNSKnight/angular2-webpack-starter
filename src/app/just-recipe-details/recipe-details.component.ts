@@ -20,8 +20,7 @@ import { recipeModel, RecipeI } from './services/recipe.store';
 
 import { padStart, cloneDeep, clone } from 'lodash';
 
-// this may show up in future version
-import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import {MaterializeAction} from 'angular2-materialize';
 
 declare var Materialize: { updateTextFields: Function };
 
@@ -37,7 +36,6 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   originalTitle: string;
   recipe: RecipeI;
   test: RecipeI;
-  modalActions = new EventEmitter<string | MaterializeAction>();
 
   // Assign our `recipe` to a locally scoped property
   // Perform additional logic on every update via ES6 setter
@@ -50,6 +48,8 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe = Object.assign(cloneDeep(this.rModel), recipe || {});
   }
 
+  @Input() modalActions;
+  
   // Allow the user to save/delete a `recipe or cancel the
   // operation. Flow events up from here.
   @Output() saveUA = new EventEmitter();

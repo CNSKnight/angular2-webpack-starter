@@ -16,6 +16,16 @@ import {
 
 import { RecipeI } from './services/recipe.store';
 
+
+// for the preview
+// require("imports?$=jquery!materialize-css/js/velocity.min");
+interface Window {
+  jQuery: Function,
+  $: Function
+};
+declare var window: Window;
+declare var $:any;
+
 @Component({
   moduleId: (module.id).toString(),
   selector: 'recipe-preview',
@@ -34,6 +44,10 @@ export class RecipePreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // hacks
+    // window.$ = window.jQuery;
+    // let $modal = window.$('.modal');
+    // $modal.length && $modal.modal();
   }
 
   ngOnChanges(changed: any) {

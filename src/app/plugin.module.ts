@@ -15,8 +15,9 @@ import { PluginComponent } from './plugin.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
-import 'materialize-css';
+// support
 import { MaterializeModule } from 'angular2-materialize';
+
 
 import { StoreModule } from '@ngrx/store';
 
@@ -24,7 +25,6 @@ import { recipesReducer } from './just-recipe-details/services/recipes.reducer';
 import { selectedRecipeReducer } from './just-recipe-details/services/selected-recipe.reducer';
 import { RecipeDetailsModule } from './just-recipe-details/recipe-details.module';
 
-import {BodyObserver} from './bodyObserver.directive';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -43,8 +43,7 @@ type StoreType = {
 @NgModule({
   bootstrap: [ PluginComponent],
   declarations: [
-    PluginComponent,
-    BodyObserver
+    PluginComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -55,14 +54,16 @@ type StoreType = {
     StoreModule.provideStore({
       recipesR: recipesReducer,
       selectedRecipeR: selectedRecipeReducer
-    })
+    }),
+    MaterializeModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS
   ],
   exports: [
-    RecipeDetailsModule
+    RecipeDetailsModule,
+    MaterializeModule
   ]
 })
 export class PluginModule {

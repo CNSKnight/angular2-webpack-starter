@@ -8,8 +8,10 @@
 
 import {
   Component,
+  EventEmitter,
   OnInit,
   OnChanges,
+  Output,
   ChangeDetectionStrategy,
   ViewEncapsulation
 } from '@angular/core';
@@ -17,15 +19,12 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import {MaterializeDirective, MaterializeAction} from 'angular2-materialize';
+import {MaterializeAction} from 'angular2-materialize';
 
 import { recipeModel, RecipeI, RecipesStoreI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
 
 import { cloneDeep, transform, isArray, forOwn } from 'lodash';
-
-// for the preview
-// require("imports?$=jquery!materialize-css/js/velocity.min");
 
 @Component({
   moduleId: (module.id).toString(),
@@ -44,6 +43,9 @@ export class RecipesComponent implements OnInit, OnChanges {
   selectedRecipeR: Observable<{}>;
 
   showCards: boolean = false;
+
+  // child comps will use this as well
+  modalActions = new EventEmitter<string | MaterializeAction>();
 
   id: number = null;
 
@@ -71,7 +73,7 @@ export class RecipesComponent implements OnInit, OnChanges {
   ngOnInit() {
     var subscribable = this.recipesService.loadRecipe();
     if (! subscribable) {
-      this.recipesService.loadRecipes();
+      // this.recipesService.loadRecipes();
     }
   }
 
