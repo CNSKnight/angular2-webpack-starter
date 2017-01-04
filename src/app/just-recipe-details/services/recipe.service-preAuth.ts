@@ -1,6 +1,6 @@
 /**
- * recipe.service.js
-*/
+ * recipe.service-preAuth.js
+ */
 
 // # Recipe Service
 
@@ -28,7 +28,10 @@ declare var acap;
 @Injectable()
 export class RecipeService {
   recipesR: Observable<[RecipeI]>;
-  apiBase: string;
+  // apiBase = '//localhost:3000/api/recipe';
+  apiBase: 'https://vegrds.dharmiweb.net/api/recipes'
+  findOneBase: 'https://vegrds.dharmiweb.net/api/recipes/findOne';
+  preAuthBase: 'https://vegrds.dharmiweb.net/api/recipes/preAuth';
   contUnitsMgr: any;
 
   // Inject the `AppStore` into the constructor with a type of `AppStore`
@@ -39,8 +42,6 @@ export class RecipeService {
     // Since this is essentially a `key, value` system, we can
     // set our `recipes` by calling `store.select('recipes')`
     this.recipesR = store.select('recipesR');
-    //this.apiBase = '//localhost:3000/api/recipe';
-    this.apiBase = 'https://vegrds.dharmiweb.net/api/recipes';
 
     this.contUnitsMgr = (
       (typeof acap !== 'undefined' && acap.ADMIN_TAPPADS && acap.ADMIN_TAPPADS.contUnitsMgr) ||
@@ -65,7 +66,7 @@ export class RecipeService {
     }
 
     if (id) {
-      return this.http.get(this.apiBase + '/findOne?filter={"where":{"acapID":'+ id +'}}')
+      return this.http.get(this.findOneBase + '?filter={"where":{"acapID":' + id + '}}')
         .catch((error: any) => Observable.throw('load recipe request error: ' + error.json().error.message || '""'))
         .map((res: Response) => res.json())
         .map(payload => (info && (payload.title = info.ad_unit_name), payload))
@@ -74,7 +75,7 @@ export class RecipeService {
     }
   }
 
-  // used w/in listing context to load all
+  // used only w/in listing context to load all
   loadRecipes() {
     return this.http.get(this.apiBase)
       .catch((error: any) => Observable.throw('load recipes request error: ' + error.json().error.message || '""'))
@@ -103,8 +104,12 @@ export class RecipeService {
     recipe.id && (delete recipe.id);
     recipe.acapID = info.ad_unit_id;
     recipe.title = info.ad_unit_name;
-
-    this.http.post(this.apiBase, JSON.stringify(recipe), HEADER)
+    var payload = {
+      recipe: recipe,
+      actionStatus: 'cont-units:recipes:update'
+    };
+    
+    this.http.post(this.preAuthBase, JSON.stringify(payload), HEADER)
       .catch((error: any) => Observable.throw('create recipe request error: ' + error.json().error.message || '""'))
       .map(res => res.json())
       .map(payload => ({ type: 'CREATE_RECIPE', payload }))
@@ -113,7 +118,7 @@ export class RecipeService {
 
   updateRecipe(recipe: RecipeI) {
     if (!recipe.id) this.store.dispatch({ type: 'ERROR', payload: recipe });
-    let url = `${this.apiBase}/${recipe.id}`;
+    let url = `${this.preAuthBase}/${recipe.id}`;
     delete recipe.id;
     this.http.put(url, JSON.stringify(recipe), HEADER)
       .catch((error: any) => Observable.throw('update recipe request error: ' + error.json().error || '""'))
@@ -123,7 +128,7 @@ export class RecipeService {
   }
 
   deleteRecipe(recipe: RecipeI) {
-    this.http.delete(`${this.apiBase}/${recipe.id}`)
+    this.http.delete(`${this.preAuthBase}/${recipe.id}`)
       .catch((error: any) => Observable.throw('delete recipe request error: ' + error.json().error || '""'))
       .subscribe(action => this.store.dispatch({ type: 'DELETE_RECIPE', payload: recipe }));
   }
