@@ -19,7 +19,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import {MaterializeAction} from 'angular2-materialize';
+import { MaterializeAction } from 'angular2-materialize';
 
 import { recipeModel, RecipeI, RecipesStoreI } from './services/recipe.store';
 //import { RecipeService } from './services/recipe.service';
@@ -58,7 +58,7 @@ export class RecipesComponent implements OnInit, OnChanges {
 
     // Bind to the subscribed `recipesR` ~observable~ behavior subject from the store
     this.recipesR = recipesService.recipesR;
-    //this.recipesR.subscribe(r => console.log('recipesR', r));
+    this.recipesR.subscribe(() => {}, this.onServiceError);
 
     // Binds/sets up the unsubscribed `selectedRecipe` observable from the store,
     // for our subcomponent(s)
@@ -81,6 +81,10 @@ export class RecipesComponent implements OnInit, OnChanges {
   ngOnChanges(changed: any) {
   }
 
+  onServiceError(errorMsg: String) {
+    console.log(errorMsg);
+  }
+
   toggle(what: string) {
     if (what == 'cards') {
       this.showCards = (this.showCards ? false : true);
@@ -92,6 +96,11 @@ export class RecipesComponent implements OnInit, OnChanges {
       type: 'SELECT_RECIPE',
       payload: recipe
     });
+  }
+
+  saveRecipe(recipe: RecipeI) {
+    this.recipesService.saveRecipe(recipe);
+    // this.resetRecipe();
   }
 
   deleteRecipe(recipe: RecipeI) {
@@ -113,10 +122,5 @@ export class RecipesComponent implements OnInit, OnChanges {
       type: 'SELECT_RECIPE',
       payload: emptyRecipe
     });
-  }
-
-  saveRecipe(recipe: RecipeI) {
-    this.recipesService.saveRecipe(recipe);
-    this.resetRecipe();
   }
 }

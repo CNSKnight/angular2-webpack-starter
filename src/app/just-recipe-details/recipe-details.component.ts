@@ -44,7 +44,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   // recipe is bound in the parent template as recipe from its selectedRecipeR
   @Input('recipe')
   set _recipe(recipe: RecipeI) {
-    recipe && (this.originalTitle = recipe.title);
+    this.originalTitle = (recipe && recipe.title) || 'New Recipe';
     this.recipe = Object.assign(cloneDeep(this.rModel), recipe || {});
   }
 
@@ -140,6 +140,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
 
   deleteMethod(idx: number) {
     this.recipe.method.splice(idx, 1);
+    this.recipe.method.forEach((item, idx) => {
+      item.step = idx+1;
+    });
   }
 
   orderIngredients() {

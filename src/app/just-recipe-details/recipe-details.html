@@ -1,7 +1,7 @@
 <div materialize class="recipe-card">
     <div>
         <h2 *ngIf="recipe.id">Editing {{originalTitle}}</h2>
-        <h2 *ngIf="! recipe.id">Create New Recipe</h2>
+        <h2 *ngIf="! recipe.id">Creating {{originalTitle}}</h2>
     </div>
     <form #rdForm="ngForm" (ngSubmit)="onSubmit(recipe, saveUA)">
 
@@ -73,7 +73,7 @@
                             <label htmlFor="ing-{{idx}}-opt">Optional?</label>
                         </div>
                         <div class="input-field col s6 m3 center-align">
-                            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteIngredient(ingredient)">
+                            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteIngredient(idx)">
                 <i class="material-icons">delete</i>
               </button>
                         </div>
@@ -106,7 +106,7 @@
                         <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
                     </div>
                     <div class="input-field col s12 m2 center-align">
-                        <button class="btn-flat btn-sm red-text" type="button" (click)="deleteMethod(method)">
+                        <button class="btn-flat btn-sm red-text" type="button" (click)="deleteMethod(idx)">
               <i class="material-icons">delete</i>
             </button>
                     </div>

@@ -12,6 +12,7 @@ import { recipesComps } from './recipes.comps';
 // import { recipesReducer } from './services/recipes.reducer';
 
 import { RecipeCardObserver } from './recipeCardObserver.directive';
+import { transformMarkdownPipe } from './transform-markdown.pipe';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { RecipeCardObserver } from './recipeCardObserver.directive';
     ],
     declarations: [
         ...recipesComps,
-        RecipeCardObserver
+        RecipeCardObserver,
+        transformMarkdownPipe
     ],
     exports: [...recipesComps, MaterializeModule],
     providers: [

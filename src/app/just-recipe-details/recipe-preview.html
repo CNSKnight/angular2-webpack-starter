@@ -21,9 +21,7 @@
                 </div>
             </div>
             <div class="row" *ngIf="recipe.description">
-                <div class="col s12 ">
-                    <p>{{recipe.description}}</p>
-                </div>
+                <div class="col s12" [innerHtml]="recipe.description | transformMarkdown"></div>
             </div>
             <div class="row ">
                 <div class="col s12 ">
@@ -43,7 +41,7 @@
                                 <td>{{ingredient.unit}}</td>
                                 <td>{{ingredient.name}}</td>
                                 <td>{{ingredient.preparation}}</td>
-                                <td><i class="material-icons light-green-text " *ngIf="ingredient.optional ">check</i></td>
+                                <td><i class="material-icons light-green-text " *ngIf="ingredient.optional">check</i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -53,14 +51,14 @@
                 <div class="col s12 ">
                     <dl *ngFor="let method of recipe.method; ">
                         <dt>Step {{method.step}}:</dt>
-                        <dd>{{method.text}}</dd>
+                        <dd [innerHtml]="method.text | transformMarkdown"></dd>
                     </dl>
                 </div>
             </div>
             <div class="row ">
                 <div class="col s12 ">
                     <p *ngIf="recipe.tags.length ">
-                        <span *ngFor="let tag of recipe.tags; " class="chip light-green lighten-3 ">#{{tag.text}}</span>
+                        <span *ngFor="let tag of recipe.tags; " class="chip light-green lighten-3">#{{tag.text}}</span>
                     </p>
                 </div>
             </div>
@@ -68,8 +66,8 @@
         </div>
         <div class="modal-footer align-center ">
             <p class="left ">
-                <i class="material-icons amber-text text-accent-4 left ">warning</i>Note: This preview will not reflect any unsaved changes.</p>
-            <a class="btn-flat modal-close "><i class="material-icons left ">close</i> Dismiss</a>
+                <i class="material-icons amber-text text-accent-4 left">warning</i>Note: This preview will not reflect any unsaved changes.</p>
+            <a class="btn-flat modal-close "><i class="material-icons left">close</i> Dismiss</a>
         </div>
     </div>
 </div>
