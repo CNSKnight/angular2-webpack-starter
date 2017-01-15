@@ -32,7 +32,7 @@ export const recipeModel:RecipeI = {
   creator: '',
   description: '',
   ingredients: [{qty:'', unit:'', name:'', optional:false, preparation:''}],
-  method: [{step:0, text:''}],
+  method: [{step:1, text:''}],
   published: false,
   rating: 0,
   subTitle: '',
