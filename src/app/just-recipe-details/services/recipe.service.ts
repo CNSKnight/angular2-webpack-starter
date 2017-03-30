@@ -65,7 +65,7 @@ export class RecipeService {
     }
 
     if (id) {
-      return this.http.get(this.apiBase + '/findOne?filter={"where":{"acapID":'+ id +'}}')
+      return this.http.get(this.apiBase + '/findOne?filter={"where":{"acapID":' + id + '}}')
         .catch((error: any) => Observable.throw('load recipe request error: ' + error.json().error.message || '""'))
         .map((res: Response) => res.json())
         .map(payload => (info && (payload.title = info.ad_unit_name), payload))
@@ -97,8 +97,8 @@ export class RecipeService {
 
   createRecipe(recipe: RecipeI) {
     let info = this.contUnitsMgr && this.contUnitsMgr.getInfo();
-    if (! info) {
-        return this.contUnitsMgr.setMessages('<p>Save failed! I didn\'t get acapF cont-unit info?');
+    if (!info) {
+      return this.contUnitsMgr.setMessages('<p>Save failed! I didn\'t get acapF cont-unit info?');
     }
     recipe.id && (delete recipe.id);
     recipe.acapID = info.ad_unit_id;

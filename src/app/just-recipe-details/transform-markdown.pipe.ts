@@ -9,7 +9,7 @@ import * as MarkdownIt from 'markdown-it';
 export class transformMarkdownPipe implements PipeTransform {
   md: any;
   constructor() {
-    this.md = MarkdownIt({html: true, linkify: false, html_inline: true, escape: false});
+    this.md = MarkdownIt({ html: true, linkify: false, html_inline: true, escape: false });
   }
   transform(strMrkdwn: string): string {
     return this.md.render(strMrkdwn);

@@ -25,20 +25,20 @@
     <plugin>Loading</plugin>
 </body>
 <script>
-    (function(parent) {
+    (function (parent) {
         if (!"MutationObserver" in window) return;
         try {
             var details = parent.acap.ADMIN_TAPPADS.contUnitsMgr.details;
             var lastHgt;
             if (details) {
-                details.onMuts = function(mutation) {
+                details.onMuts = function (mutation) {
                     var hgt = document.body.clientHeight;
                     if (hgt < 900 || lastHgt == hgt) return; // matches parent container min-height;
                     details.setIframeWrapperHgt(hgt + 20);
                     lastHgt = hgt;
                 };
 
-                var observer = new MutationObserver(function(mutations) {
+                var observer = new MutationObserver(function (mutations) {
                     mutations.forEach(details.onMuts);
                 });
 
@@ -51,6 +51,7 @@
             console.log(except.message);
         }
     })(window.parent);
+
 </script>
 
 </html>

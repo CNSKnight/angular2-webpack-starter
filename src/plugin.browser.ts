@@ -17,7 +17,7 @@ export function plugin(): Promise<any> {
   return platformBrowserDynamic()
     .bootstrapModule(PluginModule)
     .then(decorateModuleRef)
-    .catch(err => console.error(err));
+    .catch((err) => console.error(err));
 }
 
 // needed for hmr

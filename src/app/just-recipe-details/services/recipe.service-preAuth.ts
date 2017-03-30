@@ -160,7 +160,7 @@ export class RecipeService {
         if (error.status != 404) {
             contUnitsMgr.setMessages(errMsg);
         }
-        
+
         return Observable.throw(errMsg);
     }
 }

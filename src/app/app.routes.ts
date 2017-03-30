@@ -8,11 +8,11 @@ import { DataResolver } from './app.resolver';
 import { RecipesRoutes } from './just-recipe-details/recipes.routes';
 
 export const ROUTES: Routes = [
-  { path: '',      component: HomeComponent },
-  { path: 'home',  component: HomeComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'detail', loadChildren: './+detail#DetailModule'},
-  { path: 'barrel', loadChildren: './+barrel#BarrelModule'},
+  { path: 'detail', loadChildren: './+detail#DetailModule' },
+  { path: 'barrel', loadChildren: './+barrel#BarrelModule' },
   ...RecipesRoutes,
-  { path: '**',    component: NoContentComponent },
+  { path: '**', component: NoContentComponent },
 ];
