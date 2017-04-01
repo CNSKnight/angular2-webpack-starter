@@ -5,7 +5,8 @@ import { NoContentComponent } from './no-content';
 
 import { DataResolver } from './app.resolver';
 
-import { RecipesRoutes } from './just-recipe-details/recipes.routes';
+import { RecipesCompositeRoutes } from './recipes/recipes-composite/recipes-composite.routes';
+import { DetailsPluginRoutes } from './recipes/details-plugin/details-plugin.routes';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ export const ROUTES: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule' },
   { path: 'barrel', loadChildren: './+barrel#BarrelModule' },
-  ...RecipesRoutes,
+  ...RecipesCompositeRoutes,
+  ...DetailsPluginRoutes,
   { path: '**', component: NoContentComponent },
 ];

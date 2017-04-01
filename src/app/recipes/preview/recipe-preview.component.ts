@@ -10,7 +10,7 @@ import {
   OnChanges
 } from '@angular/core';
 
-import { RecipeI } from './services/recipe.store';
+import { RecipeI } from '../services/recipe.store';
 
 // for the preview require("imports?$=jquery!materialize-css/js/velocity.min");
 interface Window {

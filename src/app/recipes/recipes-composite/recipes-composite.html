@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col s12 m6">
+        <ul class="recipes collection with-header">
+            <li class="collection-header">
+                <h4 class="action-bar">Recipes
+                    <button class="btn btn-flat right" (click)="toggle('cards')">
+                    <i class="material-icons medium orange-text text-lighten-2" *ngIf="! showCards">view_agenda</i>
+                    <i class="material-icons medium orange-text text-lighten-2" *ngIf="showCards">view_list</i>
+                </button>
+                </h4>
+            </li>
+            <!-- [target]="source | async" -->
+            <!-- apparently because passing into external template, all must match -->
+            <recipe-list *ngIf="! showCards" [recipesR]="recipesR | async" (selectUA)="selectRecipe($event)" (deleteUA)="deleteRecipe($event)">
+                <div idkyet>{{'Recipes Loading'}}...</div>
+            </recipe-list>
+            <recipe-cards *ngIf="showCards" [recipesR]="recipesR | async" (selectUA)="selectRecipe($event)" (deleteUA)="deleteRecipe($event)">
+            </recipe-cards>
+        </ul>
+    </div>
+    <div class="col s12 m6">
+        <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [recipe]="selectedRecipeR | async">Choose recipe from list...
+        </recipe-detail>
+    </div>
+    <div id="rPrevModal" class="modal" materialize [materializeActions]="modalActions">
+        <recipe-preview [recipe]="selectedRecipeR | async">
+        </recipe-preview>
+    </div>
+</div>

@@ -4,14 +4,14 @@ import * as MarkdownIt from 'markdown-it';
  * Transform Markdown to HTML with MarkdownIt
 */
 @Pipe({
-  name: 'transformMarkdown'
+  name: 'myTransformMarkdown'
 })
-export class transformMarkdownPipe implements PipeTransform {
-  md: any;
+export class TransformMarkdownPipe implements PipeTransform {
+  private md: any;
   constructor() {
     this.md = MarkdownIt({ html: true, linkify: false, html_inline: true, escape: false });
   }
-  transform(strMrkdwn: string): string {
+  public transform(strMrkdwn: string): string {
     return this.md.render(strMrkdwn);
   }
 }

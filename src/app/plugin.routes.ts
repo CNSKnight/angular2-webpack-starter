@@ -1,11 +1,9 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 
-import { DataResolver } from './app.resolver';
+// import { DataResolver } from './app.resolver';
 
-import { RecipesComponent } from './just-recipe-details/recipes.component';
-import { RecipesRoutes } from './just-recipe-details/recipes.routes';
+import { DetailsPluginRoutes } from './recipes/details-plugin/details-plugin.routes';
 
 export const ROUTES: Routes = [
-  { path: '', component: RecipesComponent },
-  ...RecipesRoutes
+  ...DetailsPluginRoutes
 ];

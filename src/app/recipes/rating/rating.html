@@ -1,0 +1,7 @@
+<span tabindex="0">
+  <template ngFor [ngForOf]="range" let-index="index">
+    <span class="sr-only">({{ index < rate ? '*' : ' ' }})</span>
+    <a href="!#"><i [ngClass]="index < rate ? 'material-icons green-text lighten-2' : 'material-icons grey-text lighten-1'"
+      (click)="update(index + 1)">star</i></a>
+  </template>
+</span>

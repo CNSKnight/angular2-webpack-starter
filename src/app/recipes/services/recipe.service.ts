@@ -1,6 +1,6 @@
 /**
  * recipe.service.js
-*/
+ */
 
 // # Recipe Service
 
@@ -32,14 +32,13 @@ export class RecipeService {
   contUnitsMgr: any;
 
   // Inject the `AppStore` into the constructor with a type of `AppStore`
-  constructor(private http: Http,
-    private store: Store<RecipesStoreI>) {
+  constructor(private http: Http, private store: Store<RecipesStoreI>) {
 
     // Bind an observable of our `recipes` to `RecipeService`
     // Since this is essentially a `key, value` system, we can
     // set our `recipes` by calling `store.select('recipes')`
     this.recipesR = store.select('recipesR');
-    //this.apiBase = '//localhost:3000/api/recipe';
+    // this.apiBase = '//localhost:3000/api/recipe';
     this.apiBase = 'https://vegrds.dharmiweb.net/api/recipes';
 
     this.contUnitsMgr = (

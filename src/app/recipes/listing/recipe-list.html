@@ -1,0 +1,11 @@
+<li class="collection-item {{isSelected(recipe) ? 'active' : ''}}"
+ *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
+    <div>
+        <span class="secondary-content left">
+            <i class="material-icons amber-text" *ngIf="! recipe.published">visibility_off</i>
+            <i class="material-icons green-text" *ngIf="recipe.published">visibility</i>
+        </span>
+        {{recipe.title}}
+        <span class="secondary-content"><i class="material-icons">send</i></span>
+    </div>
+</li>

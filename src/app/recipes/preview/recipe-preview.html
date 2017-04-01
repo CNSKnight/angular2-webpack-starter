@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="row" *ngIf="recipe.description">
-                <div class="col s12" [innerHtml]="recipe.description | transformMarkdown"></div>
+                <div class="col s12" [innerHtml]="recipe.description | myTransformMarkdown"></div>
             </div>
             <div class="row ">
                 <div class="col s12 ">
@@ -51,7 +51,7 @@
                 <div class="col s12 ">
                     <dl *ngFor="let method of recipe.method; ">
                         <dt>Step {{method.step}}:</dt>
-                        <dd [innerHtml]="method.text | transformMarkdown"></dd>
+                        <dd [innerHtml]="method.text | myTransformMarkdown"></dd>
                     </dl>
                 </div>
             </div>

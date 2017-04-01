@@ -20,9 +20,9 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { StoreModule } from '@ngrx/store';
 
-import { recipesReducer } from './just-recipe-details/services/recipes.reducer';
-import { selectedRecipeReducer } from './just-recipe-details/services/selected-recipe.reducer';
-import { RecipeDetailsModule } from './just-recipe-details/recipe-details.module';
+import { recipesReducer } from './recipes/services/recipes.reducer';
+import { selectedRecipeReducer } from './recipes/services/selected-recipe.reducer';
+import { DetailsPluginModule } from './recipes/details-plugin/details-plugin.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -47,7 +47,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
-    RecipeDetailsModule,
+    DetailsPluginModule,
     StoreModule.provideStore({ recipesR: recipesReducer, selectedRecipeR: selectedRecipeReducer }),
     MaterializeModule
   ],
@@ -55,7 +55,7 @@ type StoreType = {
     ENV_PROVIDERS,
     APP_PROVIDERS
   ],
-  exports: [RecipeDetailsModule, MaterializeModule]
+  exports: [DetailsPluginModule, MaterializeModule]
 })
 export class PluginModule {
   constructor(public appRef: ApplicationRef, public appState: AppState) { }
