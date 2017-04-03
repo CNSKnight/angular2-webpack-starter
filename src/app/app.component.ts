@@ -44,7 +44,7 @@ import { AppState } from './app.service';
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
           Recipes
       </a>
-      <a [routerLink]=" ['./recipe-details'] "
+      <a [routerLink]=" ['./recipe-detail'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
           Details
       </a>

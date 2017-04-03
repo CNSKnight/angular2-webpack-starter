@@ -1,7 +1,11 @@
-<div materialize class="recipe-card">
+<div *ngIf="! recipe;">
+    <h3>No recipe was provided. Please return to the listing and choose again or Add.</h3>
+</div>
+<div *ngIf="recipe;" #recipeBloc materialize class="recipe-card">
     <div>
-        <h2 *ngIf="recipe.id">Editing {{originalTitle}}</h2>
-        <h2 *ngIf="! recipe.id">Creating {{originalTitle}}</h2>
+        <h5 *ngIf="recipe.id">Editing</h5>
+        <h5 *ngIf="! recipe.id">Creating</h5>
+        <h4 ngClass="highlight">{{originalTitle}}</h4>
     </div>
     <form #rdForm="ngForm" (ngSubmit)="onSubmit(recipe, saveUA)">
 
@@ -40,6 +44,12 @@
             <div class="input-field col s12">
                 <input name="creator" [(ngModel)]="recipe.creator" placeholder="Creator Name/Attribution" type="text">
                 <label>Original Creator</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="originalUrl" [(ngModel)]="recipe.originalUrl" placeholder="Address where originally published" type="url">
+                <label>Originaly Published URL</label>
             </div>
         </div>
         <div class="row">
@@ -102,7 +112,8 @@
                 <div class="row" *ngFor="let method of recipe.method; let idx = index;">
                     <input name="method-{{idx}}-step" [(ngModel)]="method.step" hidden>
                     <div class="input-field col s12 m10">
-                        <textarea class="materialize-textarea" [attr.id]="getTAID(recipe.id, idx)" name="method-{{idx}}-text" [(ngModel)]="method.text" placeholder="Step Content"></textarea>
+                        <textarea class="materialize-textarea" [attr.id]="getTAID(recipe.id, idx)" name="method-{{idx}}-text" [(ngModel)]="method.text"
+                            placeholder="Step Content"></textarea>
                         <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
                     </div>
                     <div class="input-field col s12 m2 center-align">
@@ -149,7 +160,8 @@
                 <button class="btn-flat" type="button" (click)="cancelUA.emit(recipe)">Cancel</button>
             </div>
             <div class="col s4 center-align">
-                <button *ngIf="recipe.id" type="button" class="btn waves-effect waves-light light-green lighten-3 modal-trigger" data-target="#rPrevModal" (click)="openModal()">Preview</button>
+                <button *ngIf="recipe.id" type="button" class="btn waves-effect waves-light light-green lighten-3 modal-trigger" data-target="#rPrevModal"
+                    (click)="openModal()">Preview</button>
             </div>
             <div class="col s4 center-align">
                 <button class="btn waves-effect waves-light" type="submit" [disabled]="! rdForm.valid">Save</button>

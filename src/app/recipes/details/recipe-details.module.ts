@@ -11,6 +11,7 @@ import { recipeDetailsComps } from './recipe-details.comps';
 // import { recipesReducer } from './services/recipes.reducer';
 
 import { RecipeCardObserver } from '../cards/recipeCardObserver.directive';
+import { TransformMarkdownPipe } from '../shared/transform-markdown.pipe';
 
 /**
  * binds together RecipeDetailsComponent and RecipePreviewComponent
@@ -22,7 +23,8 @@ import { RecipeCardObserver } from '../cards/recipeCardObserver.directive';
     ],
     declarations: [
         ...recipeDetailsComps,
-        RecipeCardObserver
+        RecipeCardObserver,
+        TransformMarkdownPipe
     ],
     exports: [
         ...recipeDetailsComps,

@@ -5,34 +5,26 @@
 // ```
 
 // # Recipe Detail Component
-// # Details Plugin Component
 
 import {
   Component,
+  EventEmitter,
   OnInit,
   OnChanges,
+  Output,
   ChangeDetectionStrategy,
-  ViewEncapsulation,
-  EventEmitter
+  ViewEncapsulation
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { RecipesStoreI } from '../services/recipe.store';
+import { MaterializeAction } from 'angular2-materialize';
 
-import { recipeModel, RecipeI } from '../services/recipe.store';
+import { recipeModel, RecipeI, RecipesStoreI } from '../services/recipe.store';
 import { RecipeService } from '../services/recipe.service';
 
 import { cloneDeep, transform, isArray, forOwn } from 'lodash';
-
-// this may show up in future version
-// import { MaterializeActions } from 'angular2-materialize/dist/materialize-directive';
-
-interface MaterializeAction {
-  action: string;
-  params: [any];
-}
 
 @Component({
   moduleId: (module.id).toString(),
@@ -52,9 +44,10 @@ export class RecipesCompositeComponent implements OnInit, OnChanges {
 
   showCards: boolean = false;
 
-  id: number = null;
-
+  // child comps will use this as well
   modalActions = new EventEmitter<string | MaterializeAction>();
+
+  id: number = null;
 
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
     private store: Store<RecipesStoreI>) {
@@ -64,28 +57,30 @@ export class RecipesCompositeComponent implements OnInit, OnChanges {
 
     // Bind to the subscribed `recipesR` ~observable~ behavior subject from the store
     this.recipesR = recipesService.recipesR;
-    // this.recipesR = store.select('recipesR');
-    this.recipesR.subscribe(r => console.log('recipesR', r));
+    this.recipesR.subscribe(() => {}, this.onServiceError);
 
     // Binds/sets up the unsubscribed `selectedRecipe` observable from the store,
     // for our subcomponent(s)
     this.selectedRecipeR = store.select('selectedRecipeR');
 
     this.resetRecipe();
-    // DEBUG
-    console.log(this.selectedRecipeR);
-    this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
+    //this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
+    // this.selectedRecipeR.subscribe(this.selectRecipe.bind(this));
   }
+
   // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event
   // to our store which in turn updates the `recipesS` collection
   ngOnInit() {
-    if (!this.recipesService.loadRecipe()) {
+    if (1==1 || !this.recipesService.loadRecipe()) {
       this.recipesService.loadRecipes();
     }
   }
 
   ngOnChanges(changed: any) {
-    this.recipesR.subscribe(r => console.log('recipesR', r));
+  }
+
+  onServiceError(errorMsg: String) {
+    console.log(errorMsg);
   }
 
   toggle(what: string) {
@@ -101,6 +96,11 @@ export class RecipesCompositeComponent implements OnInit, OnChanges {
     });
   }
 
+  saveRecipe(recipe: RecipeI) {
+    this.recipesService.saveRecipe(recipe);
+    // this.resetRecipe();
+  }
+
   deleteRecipe(recipe: RecipeI) {
     this.recipesService.deleteRecipe(recipe);
   }
@@ -112,25 +112,13 @@ export class RecipesCompositeComponent implements OnInit, OnChanges {
     //     accum[idx] = isArray(val) ? [] : val;
     //   });
 
-    forOwn(emptyRecipe, (val: any, idx: any) => {
-      val = isArray(val) ? [] : val;
-    });
-    console.log(emptyRecipe);
+    forOwn(emptyRecipe, (val:any, idx:any) => {
+        val = isArray(val) ? [] : val;
+      });
+    
     this.store.dispatch({
       type: 'SELECT_RECIPE',
       payload: emptyRecipe
     });
-  }
-
-  saveRecipe(recipe: RecipeI) {
-    this.recipesService.saveRecipe(recipe);
-    this.resetRecipe();
-  }
-
-  openModal() {
-    this.modalActions.emit({ action: "modal", params: ['open'] });
-  }
-  closeModal() {
-    this.modalActions.emit({ action: "modal", params: ['close'] });
   }
 }

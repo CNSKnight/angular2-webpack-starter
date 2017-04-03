@@ -22,16 +22,12 @@
             <rating-comp [interactive]="false" [rate]="recipe.rating"></rating-comp>
             {{recipe.rating}}
         </div-->
-        <div>
-            <div class="chip" *ngFor="let tag of recipe.tags">
-                {{tag.name}}
-            </div>
-        </div>
+        <p>
+            <span class="chip" *ngFor="let tag of recipe.tags">#{{tag.text}}</span>
+        </p>
         <div>
             Created by: {{recipe.creator}}
         </div>
-        <div>
-            <p>{{recipe.description}}</p>
-        </div>
+        <div [innerHtml]="recipe.description | myTransformMarkdown"></div>
     </div>
 </li>

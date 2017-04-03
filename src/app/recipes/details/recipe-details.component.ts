@@ -1,9 +1,8 @@
 // ```
+// # Recipe Details Component
 // recipe-details.component.js
 // (c) 2016 Codename: Steeve Knight
 // ```
-
-// # Recipes Component
 
 import {
   Component,

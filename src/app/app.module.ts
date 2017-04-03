@@ -38,7 +38,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { recipesReducer } from './recipes/services/recipes.reducer';
 import { selectedRecipeReducer } from './recipes/services/selected-recipe.reducer';
-import { DetailsPluginModule } from './recipes/details-plugin/details-plugin.module';
+//import { DetailsPluginModule } from './recipes/details-plugin/details-plugin.module';
 import { RecipesCompositeModule } from './recipes/recipes-composite/recipes-composite.module';
 
 // Application wide providers

@@ -100,3 +100,10 @@ recipes .modal {
 .cont-bloc {
     padding: 0 .5em;
 }
+
+/* other */
+
+.highlight,
+.tip-title {
+    color: rgb(136, 27, 237);
+}
