@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 
-// import { DataResolver } from './app.resolver';
-
-import { DetailsPluginRoutes } from './recipes/details-plugin/details-plugin.routes';
+import { DetailsPluginComponent } from './recipes/details-plugin/details-plugin.component';
 
 export const ROUTES: Routes = [
-  ...DetailsPluginRoutes
+  { path: '',      component: DetailsPluginComponent }
+  // won't be needing this here in the plugin
+  // ...DetailsPluginRoutes
 ];

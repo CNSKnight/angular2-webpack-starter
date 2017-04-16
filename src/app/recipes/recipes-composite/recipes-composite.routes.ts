@@ -1,8 +1,8 @@
 import { RecipesCompositeComponent } from './recipes-composite.component';
-
-export const RecipesCompositeRoutes: Array<any> = [
+export const RecipesCompositeRoutes: any[] = [
   {
     path: 'recipes',
-    component: RecipesCompositeComponent
+    component: RecipesCompositeComponent,
+    // loadChildren: './recipes-composite.module#RecipesCompositeModule'
   },
 ];

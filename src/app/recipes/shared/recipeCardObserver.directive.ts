@@ -18,8 +18,9 @@ export class RecipeCardObserver implements OnInit,
     constructor(private _el: ElementRef) { }
 
     ngOnInit() {
-        if (!window || window.parent == window)
+        if (!window || window.parent == window) {
             return;
+        }
         try {
             this.details = window.parent.acap.ADMIN_TAPPADS.contUnitsMgr.details;
             this.$wrapper = $(this._el.nativeElement).parents('div');
@@ -29,13 +30,15 @@ export class RecipeCardObserver implements OnInit,
     }
 
     checkElemHgt() {
-        if (!this.details)
+        if (!this.details) {
             return;
+        }
         let hgt = this
             .$wrapper
             .height();
-        if (hgt < 900 || this.lastHgt == hgt)
+        if (hgt < 900 || this.lastHgt == hgt) {
             return; // matches parent container min-height;
+        }
         this
             .details
             .setIframeWrapperHgt(hgt + 20);

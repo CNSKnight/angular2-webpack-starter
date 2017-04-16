@@ -1,0 +1,49 @@
+<nav>
+    <div class="nav-wrapper container">
+        <ul>
+            <li><a [routerLink]=" ['./'] " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Index
+      </a></li>
+            <li><a [routerLink]=" ['./home'] " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Home
+      </a></li>
+            <li><a [routerLink]=" ['./detail'] " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Detail
+      </a></li>
+            <li><a [routerLink]=" ['./barrel'] " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Barrel
+      </a></li>
+            <li><a [routerLink]=" ['./about'] " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        About
+      </a></li>
+            <li><a [routerLink]=" ['./recipes'] " routerLinkActive="active">
+          Recipes
+      </a></li>
+            <li><a [routerLink]=" ['./recipe-detail'] " routerLinkActive="active">
+          Details
+      </a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <router-outlet></router-outlet>
+</main>
+
+<div class="container">
+    <div class="card">
+
+        <pre class="card-content app-state">this.appState.state = {{ appState.state | json }}</pre>
+    </div>
+</div>
+
+<footer class="container">
+    <span>WebPack Angular 2 Starter by <li><a [href]="url">@AngularClass</a></li></span>
+    <div>
+        <li>
+            <a [href]="url">
+                <img [src]="angularclassLogo" width="25%">
+            </a>
+        </li>
+    </div>
+</footer>

@@ -1,8 +1,10 @@
-import { RecipeDetailsComponent } from '../details/recipe-details.component';
+import { DetailsPluginComponent } from '../details-plugin/details-plugin.component';
 
 export const DetailsPluginRoutes: any[] = [
   {
     path: 'recipe-detail',
-    component: RecipeDetailsComponent
+    component: DetailsPluginComponent,
+    // lazy-loaded module might need it's own details-plugin-routing.module
+    // loadChildren: './details-plugin.module#DetailsPluginModule'
   }
 ];

@@ -1,32 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule/*,FormBuilder*/ } from '@angular/forms';
 
+import { SharedModule } from '../shared/shared.module';
 import { RecipeI } from '../services/recipe.store';
 import { RecipeService } from '../services/recipe.service';
 import { recipesCompositeComps } from './recipes-composite.comps';
-// import { RecipeDetailsModule } from '../details/recipe-details.module';
-// import { recipesReducer } from './services/recipes.reducer';
-
-// support
-import { MaterializeModule } from 'angular2-materialize';
-import { TransformMarkdownPipe } from '../shared/transform-markdown.pipe';
-console.log('MaterializeModule', MaterializeModule);
+import { DetailsPluginModule } from '../details-plugin/details-plugin.module';
+// import { recipesReducer } from './services/recipes.reducer'; support
+// console.log('MaterializeModule', MaterializeModule);
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        MaterializeModule
-    ],
-    declarations: [
-        ...recipesCompositeComps,
-    TransformMarkdownPipe
-    ],
-    exports: [...recipesCompositeComps, MaterializeModule],
-    providers: [
-        // Composite and Plugin independently provide RecipeService
-        RecipeService
-    ]
+    imports: [SharedModule, DetailsPluginModule],
+    declarations: [...recipesCompositeComps],
+    // Composite and Plugin independently provide RecipeService,
+    exports: [],
+    providers: [RecipeService]
 })
 export class RecipesCompositeModule { }
+
+// If ExComponent was not in the declarations and we used it in a view template,
+// Angular would throw the following error:
+// Template parse errors: 'ex-component' is not a known element

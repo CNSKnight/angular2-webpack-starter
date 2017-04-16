@@ -61,8 +61,9 @@ module.exports = function (options) {
 
             'polyfills': './src/polyfills.browser.ts',
             'vendor': './src/vendor.browser.ts',
+            'detailsPlugin': './src/app/recipes/details-plugin/details-plugin.module.ts',
             'main': AOT ? './src/main.browser.aot.ts' : './src/main.browser.ts',
-            'plugin': './src/plugin.browser.ts'
+            'plugin': AOT ? './src/plugin.browser.aot.ts' : './src/plugin.browser.ts'
 
         },
 
@@ -177,7 +178,7 @@ module.exports = function (options) {
                 {
                     test: /\.html$/,
                     use: 'raw-loader',
-                    exclude: [helpers.root('src/index.html')]
+                    exclude: [helpers.root('src/index.html'), helpers.root('src/index-plugin.html')]
                 },
 
                 /* 
@@ -238,12 +239,16 @@ module.exports = function (options) {
             // This enables tree shaking of the vendor modules
             new CommonsChunkPlugin({
                 name: 'vendor',
-                chunks: ['main'],
+                chunks: ['vendor'],
                 minChunks: module => /node_modules/.test(module.resource)
+            }),
+            new CommonsChunkPlugin({
+                name: 'detailsPlugin',
+                chunks: ['detailsPlugin']
             }),
             // Specify the correct order the scripts will be injected in
             new CommonsChunkPlugin({
-                name: ['polyfills', 'vendor'].reverse()
+                name: ['polyfills', 'vendor', 'detailsPlugin'].reverse()
             }),
 
             /**
@@ -256,6 +261,13 @@ module.exports = function (options) {
             new ContextReplacementPlugin(
                 // The (\\|\/) piece accounts for path separators in *nix and Windows
                 /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
+                helpers.root('src'), // location of your src
+                {
+                    // your Angular Async Route paths relative to this root directory
+                }
+            ),
+            new ContextReplacementPlugin(
+                /angular(\\|\/)core(\\|\/)@angular/,
                 helpers.root('src'), // location of your src
                 {
                     // your Angular Async Route paths relative to this root directory
@@ -289,7 +301,18 @@ module.exports = function (options) {
                 title: METADATA.title,
                 chunksSortMode: 'dependency',
                 metadata: METADATA,
-                inject: 'head'
+                inject: 'head',
+                excludeChunks: ['plugin']
+            }),
+
+            new HtmlWebpackPlugin({
+                template: 'src/index-plugin.html',
+                title: METADATA.title,
+                chunksSortMode: 'dependency',
+                metadata: METADATA,
+                inject: 'head',
+                excludeChunks: ['main'],
+                filename: 'index-plugin.html'
             }),
 
             /*

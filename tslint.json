@@ -54,6 +54,7 @@
       "ban-keywords",
       "check-format"
     ],
-    "arrow-parens": [true, "ban-single-arg-parens"]
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "member-access": false
   }
 }

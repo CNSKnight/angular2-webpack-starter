@@ -1,16 +1,23 @@
-// ng2 decorators and services
-import { Component, ViewEncapsulation } from '@angular/core';
-
+/*
+ * Angular 2 decorators and services
+ */
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppState } from './app.service';
 
-// Plugin Top Level Component
-@Component({ selector: 'plugin', encapsulation: ViewEncapsulation.None, styleUrls: ['./plugin.component.css'], template: '<router-outlet></router-outlet>' })
-export class PluginComponent {
+/*
+ * App Component
+ * Top Level Component
+ */
+@Component({
+  selector: 'plugin',
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./plugin.component.css'],
+  template: '<router-outlet></router-outlet>'
+})
+export class PluginComponent implements OnInit {
   name = 'Recipe Details Plugin';
 
-  constructor(public appState: AppState) { }
+  constructor() {}
 
-  ngOnInit() {
-    console.log('Initial App State', this.appState.state);
-  }
+  public ngOnInit() {}
 }

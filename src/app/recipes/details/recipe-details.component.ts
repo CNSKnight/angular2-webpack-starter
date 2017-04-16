@@ -19,7 +19,7 @@ import { recipeModel, RecipeI } from '../services/recipe.store';
 
 import { padStart, cloneDeep, clone } from 'lodash';
 
-import {MaterializeAction} from 'angular2-materialize';
+import { MaterializeAction } from 'angular2-materialize';
 
 declare var Materialize: { updateTextFields: Function };
 
@@ -48,7 +48,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   }
 
   @Input() modalActions;
-  
+
   // Allow the user to save/delete a `recipe or cancel the
   // operation. Flow events up from here.
   @Output() saveUA = new EventEmitter();
@@ -140,7 +140,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   deleteMethod(idx: number) {
     this.recipe.method.splice(idx, 1);
     this.recipe.method.forEach((item, idx) => {
-      item.step = idx+1;
+      item.step = idx + 1;
     });
   }
 

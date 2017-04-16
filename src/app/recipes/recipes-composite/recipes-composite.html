@@ -18,12 +18,5 @@
             </recipe-cards>
         </ul>
     </div>
-    <div class="col s12 m6">
-        <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [recipe]="selectedRecipeR | async">Choose recipe from list...
-        </recipe-detail>
-    </div>
-    <div id="rPrevModal" class="modal" materialize [materializeActions]="modalActions">
-        <recipe-preview [recipe]="selectedRecipeR | async">
-        </recipe-preview>
-    </div>
+    <div class="col s12 m6"><details-plugin></details-plugin></div>
 </div>
