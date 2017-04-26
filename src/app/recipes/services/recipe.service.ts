@@ -42,8 +42,12 @@ export class RecipeService {
         // set our `recipes` by calling `store.select('recipes')`
         this.recipesR = store.select('recipesR');
 
-        this.apiBase = 'https://vegrds.dharmiweb.net/api/recipes';
-        //this.apiBase = 'http://localhost:7109/api/recipes';
+        this.apiBase = ENV === 'production'
+            ? 'https://vegrds.dharmiweb.net/api/recipes'
+            // : 'http://localhost:7109/api/recipes';
+            : 'https://vegrds.dharmiweb.net/api/recipes';
+
+
         this.findOneBase = this.apiBase + '/findOne';
         this.preAuthBase = this.apiBase + '/preAuth';
 
@@ -55,7 +59,7 @@ export class RecipeService {
 
     // used outside of listing context to load a single
     // @return Subscribable
-    // @todo - how to annotate returned: Subscribable<RecipeI>
+    // @todo - how to annotate returned: Subscribable/Subscription<RecipeI>
     loadRecipe(id?: number) {
         let info;
         if (!id) {
@@ -160,8 +164,8 @@ export class RecipeService {
             errMsg += error.message ? error.message : error.toString();
         }
 
-        if (error.status !== 404) {
-            contUnitsMgr.setMessages(errMsg);
+        if (error.status !== 403 && error.status !== 404) {
+            contUnitsMgr && contUnitsMgr.setMessages(errMsg);
         }
 
         return Observable.throw(errMsg);
