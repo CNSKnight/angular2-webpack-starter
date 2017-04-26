@@ -30,11 +30,13 @@ import { cloneDeep, isArray, forOwn } from 'lodash';
 export class RecipesCompositeComponent extends DetailsPluginComponent implements OnInit, OnChanges {
   showCards: boolean = false;
   id: number = null;
+  isPreAuth: boolean = null;
   constructor(protected recipesService: RecipeService, protected store: Store<RecipesStoreI>) {
     super(recipesService, store);
     this.resetRecipe();
     // this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
     // this.selectedRecipeR.subscribe(this.selectRecipe.bind(this));
+    this.isPreAuth = !! recipesService.preAuthBase;
   }
 
   // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event to our store
@@ -46,7 +48,7 @@ export class RecipesCompositeComponent extends DetailsPluginComponent implements
   ngOnChanges(changed: any) { }
 
   toggle(what: string) {
-    if (what == 'cards') {
+    if (what === 'cards') {
       this.showCards = (this.showCards
         ? false
         : true);

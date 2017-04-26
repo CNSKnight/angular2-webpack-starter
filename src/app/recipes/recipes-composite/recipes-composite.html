@@ -17,6 +17,9 @@
             <recipe-cards *ngIf="showCards" [recipesR]="recipesR | async" (selectUA)="selectRecipe($event)" (deleteUA)="deleteRecipe($event)">
             </recipe-cards>
         </ul>
+        <blockquote *ngIf="isPreAuth">@note Posts and Puts won't work with preAuth from a non-same-origin.</blockquote>
     </div>
-    <div class="col s12 m6"><details-plugin></details-plugin></div>
+    <div class="col s12 m6">
+        <details-plugin></details-plugin>
+    </div>
 </div>
