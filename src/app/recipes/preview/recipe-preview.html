@@ -20,6 +20,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row" *ngIf="recipe.originalUrl">
+                <div class="col s12 center-align">
+                    Originally published <a href={{recipe.originalUrl}} target="_vegRDS_OUT">here</a>.
+                </div>
+            </div>
             <div class="row" *ngIf="recipe.description">
                 <div class="col s12" [innerHtml]="recipe.description | myTransformMarkdown"></div>
             </div>
