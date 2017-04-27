@@ -7,30 +7,37 @@ export interface RecipesStoreI {
   selectedRecipe: RecipeI;
 }
 
+interface Ingredient {
+  qty: string;
+  unit: string;
+  name: string;
+  optional: boolean;
+  preparation: string;
+}
+
+interface Tag {
+  priority: number;
+  text: string;
+}
+
+interface Method {
+  step: number;
+  text: string;
+}
+
 // # Redux store for `recipes`
 export interface RecipeI {
   id: string; // supplied by Loopback via ObjectID
   acapID: Number;
   creator: string;
+  originalUrl: string;
   description: string;
-  ingredients: {
-    qty: string,
-    unit: string,
-    name: string,
-    optional: boolean,
-    preparation: string
-  }[];
-  method: {
-    step: number,
-    text: string
-  }[];
+  ingredients: Ingredient[];
+  method: Method[];
   published: boolean;
   rating: number;
   subTitle: string;
-  tags: {
-    priority: number,
-    text: string
-  }[];
+  tags: Tag[];
   title: string;
 };
 
@@ -38,6 +45,7 @@ export const recipeModel: RecipeI = {
   id: undefined,
   acapID: null,
   creator: '',
+  originalUrl: '',
   description: '',
   ingredients: [
     {
