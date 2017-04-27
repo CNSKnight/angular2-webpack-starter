@@ -166,17 +166,37 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   * @todo remove empty or blacklisted tags or blacklisted chars
   */
   onSubmit(recipe: RecipeI, next: { emit: Function }) {
-    // validate submitted tags
-    if (recipe.tags && recipe.tags.length) {
-      let fTags = recipe.tags.filter((tag, idx, ary) => {
-        return !!tag.text.trim().length;
-      });
-
-      recipe.tags = fTags;
-    }
+    recipe.tags = this.filterTags(recipe.tags);
+    recipe.ingredients = this.filterIngredients(recipe.ingredients);
+    recipe.method = this.filterSteps(recipe.method);
 
     next && next.emit && next.emit(recipe);
   }
+
+  private filterIngredients(ingredients) {
+    if (ingredients && ingredients.length) {
+      return ingredients.filter((ing, idx, ary) => {
+        return ing.qty.trim().length || ing.unit.trim().length || ing.name.trim().length;
+      });
+    }
+  }
+
+  private filterSteps(steps) {
+    if (steps && steps.length) {
+      return steps.filter((step, idx, ary) => {
+        return step.text.trim().length;
+      });
+    }
+  }
+
+  private filterTags(tags) {
+    if (tags && tags.length) {
+      return tags.filter((tag, idx, ary) => {
+        return !!tag.text.trim().length;
+      });
+    }
+  }
+
 
   openModal() {
     this.modalActions.emit({ action: "modal", params: ['open'] });
