@@ -12,6 +12,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { RecipeI, RecipesStoreI, recipeModel } from './recipe.store';
+import servicesENV from '../../../../config/services.ENV';
+
 import { clone, assign, partial } from 'lodash';
 
 const HEADER = {
@@ -35,13 +37,16 @@ export class RecipeService {
     contUnitsMgr: any;
 
     // Inject the `AppStore` into the constructor with a type of `AppStore`
-    constructor(private http: Http, private store: Store<RecipesStoreI>) {
+    constructor(
+        private http: Http,
+        private store: Store<RecipesStoreI>
+    ) {
         // Bind an observable of our `recipes` to `RecipeService`
         // Since this is essentially a `key, value` system, we can
         // set our `recipes` by calling `store.select('recipes')`
         this.recipesR = store.select('recipesR');
 
-        this.apiBase = (process.env.recipesAPIBase || location.origin) + '/api/recipes';
+        this.apiBase = (servicesENV.recipesAPIBase || location.origin) + '/api/recipes';
 
         this.findOneBase = this.apiBase + '/findOne';
         this.preAuthBase = this.apiBase + '/preAuth';
