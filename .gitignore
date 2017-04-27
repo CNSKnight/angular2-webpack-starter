@@ -72,3 +72,4 @@ dll/
 *.shim.ngstyle.ts
 
 /prod*
+/config/services.ENV.ts
