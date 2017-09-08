@@ -17,7 +17,7 @@ import {
 import { recipeModel, RecipeI } from '../services/recipe.store';
 // import { AppStore } from '../app/services/app.store';
 
-import { padStart, cloneDeep, clone } from 'lodash';
+import { isEmpty, clone, cloneDeep, padStart } from 'lodash';
 
 import { MaterializeAction } from 'angular2-materialize';
 
@@ -98,8 +98,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   newIngredient() {
     // Check to see if the `ingredients` array exists before
     // attempting to push an `ingredient` to it
-    if (!this.recipe.ingredients)
+    if (!this.recipe.ingredients) {
       this.recipe.ingredients = [];
+    }
 
     this.recipe.ingredients.push(clone(this.rModel.ingredients[0]));
   }
@@ -110,8 +111,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   newMethod() {
     // Check to see if the `method` array exists before
     // attempting to push a `method` to it
-    if (!this.recipe.method)
+    if (!this.recipe.method) {
       this.recipe.method = [];
+    }
     let method = clone(this.rModel.method[0]);
     method.step = this.recipe.method.length + 1;
     this.recipe.method.push(method);
@@ -123,7 +125,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   newTag() {
     // Check to see if the `tags` array exists before
     // attempting to push a `tag` to it
-    this.recipe.tags || (this.recipe.tags = []);
+    if (! this.recipe.tags) {
+      this.recipe.tags = [];
+    }
     let tag = clone(this.rModel.tags[0]);
     tag.priority = this.recipe.tags.length;
     this.recipe.tags.push(tag);
@@ -137,8 +141,8 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe.ingredients.splice(idx, 1);
   }
 
-  deleteMethod(idx: number) {
-    this.recipe.method.splice(idx, 1);
+  deleteMethod(index: number) {
+    this.recipe.method.splice(index, 1);
     this.recipe.method.forEach((item, idx) => {
       item.step = idx + 1;
     });
@@ -166,42 +170,66 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   * @todo remove empty or blacklisted tags or blacklisted chars
   */
   onSubmit(recipe: RecipeI, next: { emit: Function }) {
+    // final filters return null in place of empty []'s
     recipe.tags = this.filterTags(recipe.tags);
     recipe.ingredients = this.filterIngredients(recipe.ingredients);
     recipe.method = this.filterSteps(recipe.method);
 
-    next && next.emit && next.emit(recipe);
+    if (next && next.emit) {
+      next.emit(recipe);
+    }
+  }
+
+  openModal() {
+      this.modalActions.emit({ action: 'modal', params: ['open'] });
+  }
+
+  closeModal() {
+      this.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 
   private filterIngredients(ingredients) {
-    if (ingredients && ingredients.length) {
-      return ingredients.filter((ing, idx, ary) => {
+    if (! ingredients || ! ingredients.length) {
+      return;
+    }
+
+    let valids = ingredients.filter((ing, idx, ary) => {
+        if (isEmpty(ing)) {
+          return false;
+        }
         return ing.qty.trim().length || ing.unit.trim().length || ing.name.trim().length;
       });
-    }
+
+    return isEmpty(valids) ? null : valids;
   }
 
   private filterSteps(steps) {
-    if (steps && steps.length) {
-      return steps.filter((step, idx, ary) => {
+    if (! steps || steps.length) {
+      return;
+    }
+
+    let valids = steps.filter((step, idx, ary) => {
+        if (isEmpty(step)) {
+          return false;
+        }
         return step.text.trim().length;
       });
-    }
+
+    return isEmpty(valids) ? null : valids;
   }
 
   private filterTags(tags) {
-    if (tags && tags.length) {
-      return tags.filter((tag, idx, ary) => {
+    if (! tags || ! tags.length) {
+      return;
+    }
+
+    let valids = tags.filter((tag, idx, ary) => {
+        if (isEmpty(tag)) {
+          return false;
+        }
         return !!tag.text.trim().length;
       });
-    }
-  }
 
-
-  openModal() {
-    this.modalActions.emit({ action: "modal", params: ['open'] });
-  }
-  closeModal() {
-    this.modalActions.emit({ action: "modal", params: ['close'] });
+    return isEmpty(valids) ? null : valids;
   }
 }
