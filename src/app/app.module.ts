@@ -4,6 +4,8 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -56,23 +58,29 @@ type StoreType = {
     NoContentComponent,
     XLargeDirective,
   ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    RouterModule.forRoot(ROUTES, {
-      useHash: true,
-      preloadingStrategy: PreloadAllModules
-    }),
-    StoreModule.provideStore({
-      recipesR: recipesReducer,
-      selectedRecipeR: selectedRecipeReducer
-    }),
-    MaterializeModule,
-    RecipesCompositeModule,
-    DetailsPluginModule,
+    /**
+     * Import Angular's modules.
+     */
+    imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      HttpModule,
+      RouterModule.forRoot(ROUTES, {
+        useHash: Boolean(history.pushState) === false,
+        preloadingStrategy: PreloadAllModules
+      }),
+      StoreModule.provideStore({
+        recipesR: recipesReducer,
+        selectedRecipeR: selectedRecipeReducer
+      }),
+      MaterializeModule,
+      RecipesCompositeModule,
+      DetailsPluginModule,
   ],
-  exports: [MaterializeModule],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  /**
+   * Expose our Services and Providers into Angular's dependency injection.
+   */
+  providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS
   ]
@@ -85,9 +93,13 @@ export class AppModule {
       return;
     }
     console.log('HMR store', JSON.stringify(store, null, 2));
-    // set state
+    /**
+     * Set state
+     */
     this.appState._state = store.state;
-    // set input values
+    /**
+     * Set input values
+     */
     if ('restoreInputValues' in store) {
       let restoreInputValues = store.restoreInputValues;
       setTimeout(restoreInputValues);
@@ -101,23 +113,44 @@ export class AppModule {
   }
 
   public hmrOnDestroy(store: StoreType) {
+<<<<<<< HEAD
     const cmpLocation = this
       .appRef
       .components
       .map((cmp) => cmp.location.nativeElement);
     // save state
+=======
+    const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
+    /**
+     * Save state
+     */
+>>>>>>> cf73d5fba7b1526fef5c2ac0ab93397b0db7cf8d
     const state = this.appState._state;
     store.state = state;
-    // recreate root elements
+    /**
+     * Recreate root elements
+     */
     store.disposeOldHosts = createNewHosts(cmpLocation);
+<<<<<<< HEAD
     // save input values
     store.restoreInputValues = createInputTransfer();
     // remove styles
+=======
+    /**
+     * Save input values
+     */
+    store.restoreInputValues  = createInputTransfer();
+    /**
+     * Remove styles
+     */
+>>>>>>> cf73d5fba7b1526fef5c2ac0ab93397b0db7cf8d
     removeNgStyles();
   }
 
   public hmrAfterDestroy(store: StoreType) {
-    // display new elements
+    /**
+     * Display new elements
+     */
     store.disposeOldHosts();
     delete store.disposeOldHosts;
   }

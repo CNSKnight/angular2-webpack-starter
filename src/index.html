@@ -5,37 +5,43 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
-
     <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-
+    <!-- base url -->
+    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
     <% if (webpackConfig.htmlElements.headTags) { %>
         <!-- Configured Head Tags  -->
         <%= webpackConfig.htmlElements.headTags %>
             <% } %>
 
-                <!-- base url -->
-                <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
 
-                <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-                <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-                <!--script src="https://cdn.jsdelivr.net/jquery.velocity/0.11.9/jquery.velocity.min.js"></script-->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+                <%= htmlWebpackPlugin.files.webpackManifest %>
+
+                    <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+                        <!-- Webpack Dev Server reload -->
+                        <script src="/webpack-dev-server.js"></script>
+                        <% } %>
+
+                            <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+                            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+                            <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+                            <!--script src="https://cdn.jsdelivr.net/jquery.velocity/0.11.9/jquery.velocity.min.js"></script-->
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+                            <!-- CSS will be injected by webpack here -->
+                            <!-- Preload link tags will be injected by webpack here -->
+
 </head>
 
 <body>
 
-    <app>Loading App...</app>
-    <!--plugin>Loading Plugin...</plugin-->
-    <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
-        <!-- Webpack Dev Server reload -->
-        <script src="/webpack-dev-server.js"></script>
-        <% } %>
+    <app>
+        Loading...
+    </app>
 
+    <!-- Scripts will be injected by webpack here -->
 </body>
 
 </html>
