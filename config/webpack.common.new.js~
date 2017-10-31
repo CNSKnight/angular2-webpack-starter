@@ -262,10 +262,10 @@ module.exports = function(options) {
             /**
              * idk
              */
-            new CommonsChunkPlugin({
-             name: 'detailsPlugin',
-             chunks: ['detailsPlugin']
-            }),
+            // new CommonsChunkPlugin({
+            //  name: 'detailsPlugin',
+            //  chunks: ['detailsPlugin']
+            // }),
             /**
              * Specify the correct order the scripts will be injected in
              */

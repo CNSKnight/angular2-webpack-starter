@@ -93,10 +93,6 @@ module.exports = function(options) {
 
             library: 'ac_[name]',
             libraryTarget: 'var',
-
-            // publicPath: '/RecipeDetails/prod/',
-            publicPath: '/'
-
         },
 
         module: {
@@ -271,11 +267,7 @@ module.exports = function(options) {
             module: false,
             clearImmediate: false,
             setImmediate: false
-        },
+        }
 
-        externals: [{
-            'materialize-css': 'Materialize',
-            jquery: 'jQuery',
-        }],
     });
 }
