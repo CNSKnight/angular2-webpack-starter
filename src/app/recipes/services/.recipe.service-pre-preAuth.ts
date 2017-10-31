@@ -3,8 +3,7 @@
  */
 
 // # Recipe Service
-
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import { Http, Headers, RequestOptionsArgs } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +13,7 @@ import 'rxjs/add/observable/throw';
 import { RecipeI, RecipesStoreI, recipeModel } from './recipe.store';
 import { clone, assign } from 'lodash';
 
-const HEADER = {
+const HEADER: RequestOptionsArgs = {
   headers: new Headers({
     'Content-Type': 'application/json'
   })
@@ -45,6 +44,9 @@ export class RecipeService {
       (typeof acap !== 'undefined' && acap.ADMIN_TAPPADS && acap.ADMIN_TAPPADS.contUnitsMgr) ||
       (parent.acap && parent.acap.ADMIN_TAPPADS && parent.acap.ADMIN_TAPPADS.contUnitsMgr)
     );
+    if (! this.contUnitsMgr) {
+      console.log('I don\'t have a reference to content-units manger?');
+    }
   }
 
   // used outside of listing context to load a single
@@ -97,7 +99,10 @@ export class RecipeService {
   }
 
   createRecipe(recipe: RecipeI) {
-    let info = this.contUnitsMgr && this.contUnitsMgr.getInfo();
+    if (! this.contUnitsMgr) {
+      return;
+    }
+    let info = this.contUnitsMgr.getInfo();
     if (!info) {
       return this.contUnitsMgr.setMessages('<p>Save failed! I didn\'t get acapF cont-unit info?');
     }

@@ -57,7 +57,7 @@ export class DetailsPluginComponent implements OnInit, OnChanges {
   modalActions = new EventEmitter<string | MaterializeAction>();
 
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
-    private store: Store<RecipesStoreI>) {
+              private store: Store<RecipesStoreI>) {
     this.rModel = recipeModel;
 
     this.recipesService = recipesService;
@@ -128,9 +128,9 @@ export class DetailsPluginComponent implements OnInit, OnChanges {
   }
 
   openModal() {
-    this.modalActions.emit({ action: "modal", params: ['open'] });
+    this.modalActions.emit({ action: 'modal', params: ['open'] });
   }
   closeModal() {
-    this.modalActions.emit({ action: "modal", params: ['close'] });
+    this.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 }

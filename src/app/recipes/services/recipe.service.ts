@@ -4,12 +4,13 @@
 
 // # Recipe Service
 
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
 
 import { RecipeI, RecipesStoreI, recipeModel } from './recipe.store';
 import servicesENV from '../../../../config/services.ENV';

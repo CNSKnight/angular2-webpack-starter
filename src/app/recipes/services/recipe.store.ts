@@ -25,6 +25,10 @@ interface Method {
   text: string;
 }
 
+interface Variation {
+  text: string;
+}
+
 // # Redux store for `recipes`
 export interface RecipeI {
   id: string; // supplied by Loopback via ObjectID
@@ -39,6 +43,7 @@ export interface RecipeI {
   subTitle: string;
   tags: Tag[];
   title: string;
+  variations: Variation[];
 };
 
 export const recipeModel: RecipeI = {
@@ -71,5 +76,10 @@ export const recipeModel: RecipeI = {
       text: ''
     }
   ],
-  title: ''
+  title: '',
+  variations: [
+    {
+      text: ''
+    }
+  ]
 };

@@ -1,8 +1,5 @@
-// ```
-// # Recipe Details Component
-// recipe-details.component.js
-// (c) 2016 Codename: Steeve Knight
-// ```
+// ``` # Recipe Details Component recipe-details.component.js (c) 2016 Codename:
+// Steeve Knight ```
 
 import {
   Component,
@@ -17,30 +14,32 @@ import {
 import { recipeModel, RecipeI } from '../services/recipe.store';
 // import { AppStore } from '../app/services/app.store';
 
-import { isEmpty, clone, cloneDeep, padStart } from 'lodash';
+import { isEmpty, clone, cloneDeep, padStart, isObject } from 'lodash';
 
 import { MaterializeAction } from 'angular2-materialize';
 
-declare var Materialize: { updateTextFields: Function };
+declare var Materialize: {
+  updateTextFields: Function;
+};
 
 @Component({
-  moduleId: (module.id).toString(),
+  moduleId: module.id.toString(),
   selector: 'recipe-detail',
-  templateUrl: 'recipe-details.html',
+  templateUrl: 'recipe-details.html'
   // directives: [Rating]
 })
-export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewChecked {
+export class RecipeDetailsComponent
+  implements OnInit, OnChanges, AfterViewChecked {
   selectedRecipeR: RecipeI;
   rModel: RecipeI;
   originalTitle: string;
   recipe: RecipeI;
   test: RecipeI;
 
-  // Assign our `recipe` to a locally scoped property
-  // Perform additional logic on every update via ES6 setter
-  // Create a copy of `_recipe` and assign it to `this.selectedRecipe`
-  // to which we will use to bind our form
-  // recipe is bound in the parent template as recipe from its selectedRecipeR
+  // Assign our `recipe` to a locally scoped property Perform additional logic on
+  // every update via ES6 setter Create a copy of `_recipe` and assign it to
+  // `this.selectedRecipe` to which we will use to bind our form recipe is bound
+  // in the parent template as recipe from its selectedRecipeR
   @Input('recipe')
   set _recipe(recipe: RecipeI) {
     this.originalTitle = (recipe && recipe.title) || 'New Recipe';
@@ -49,42 +48,36 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
 
   @Input() modalActions;
 
-  // Allow the user to save/delete a `recipe or cancel the
-  // operation. Flow events up from here.
+  // Allow the user to save/delete a `recipe or cancel the operation. Flow events
+  // up from here.
   @Output() saveUA = new EventEmitter();
   @Output() cancelUA = new EventEmitter();
 
   constructor() {
     this.rModel = recipeModel;
-    // this.title = new Control('', Validators.required);
-    // this.rdform = builder.group({
-    //   title: this.title
-    // });
+    // this.title = new Control('', Validators.required); this.rdform =
+    // builder.group({   title: this.title });
   }
 
   ngOnInit() {
-    // this.rdForm = this.builder.group({
-    //   title: [],
-    //   ingredient: this.builder.group({
-    //     qty: [],
-    //     unit: [],
-    //     name: []
-    //   })
-    // });
-
+    // this.rdForm = this.builder.group({   title: [],   ingredient:
+    // this.builder.group({     qty: [],     unit: [],     name: []   }) });
   }
 
   ngOnChanges(changed: any) {
+    // placeholder
   }
 
   ngAfterViewChecked() {
-    Materialize && Materialize.updateTextFields && Materialize.updateTextFields();
+    Materialize &&
+      Materialize.updateTextFields &&
+      Materialize.updateTextFields();
   }
 
   // get textarea ID
   getTAID(id: number, idx: number) {
-    let label = (id !== undefined ? id : 'newID');
-    let count = (idx + 1);
+    let label = id !== undefined ? id : 'newID';
+    let count = idx + 1;
     return label.toString().concat('-rTA-', count.toString());
   }
 
@@ -92,12 +85,8 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     return 'Step #'.concat(padStart((idx + 1).toString(), 2, '0'));
   }
 
-  // Whenever the user needs to add a new `ingredient`, push an
-  // empty `ingredient` object to the `ingredient` array on the
-  // `selectedRecipe`
+  // pushes an empty ingredient placeholder object onto the ingredients array on selectedRecipe
   newIngredient() {
-    // Check to see if the `ingredients` array exists before
-    // attempting to push an `ingredient` to it
     if (!this.recipe.ingredients) {
       this.recipe.ingredients = [];
     }
@@ -105,12 +94,8 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe.ingredients.push(clone(this.rModel.ingredients[0]));
   }
 
-  // Whenever the user needs to add a new `method`, push an
-  // empty `method` object to the `method` array on the
-  // `selectedRecipe`
+  // pushes a new method placeholder object onto the method array on the selectedRecipe
   newMethod() {
-    // Check to see if the `method` array exists before
-    // attempting to push a `method` to it
     if (!this.recipe.method) {
       this.recipe.method = [];
     }
@@ -119,13 +104,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe.method.push(method);
   }
 
-  // Whenever the user needs to add a new `tag`, push an
-  // empty `tag` object onto the `tags` array on the
-  // `selectedRecipe`
+  // pushes a new tag placeholder object onto the tags array on the selectedRecipe
   newTag() {
-    // Check to see if the `tags` array exists before
-    // attempting to push a `tag` to it
-    if (! this.recipe.tags) {
+    if (!this.recipe.tags) {
       this.recipe.tags = [];
     }
     let tag = clone(this.rModel.tags[0]);
@@ -133,8 +114,13 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe.tags.push(tag);
   }
 
-  deleteTag(idx: number) {
-    this.recipe.tags.splice(idx, 1);
+  // pushes a new variation placeholder object onto the variations array on the selectedRecipe
+  newVariation() {
+    if (!this.recipe.variations) {
+      this.recipe.variations = [];
+    }
+    let variation = clone(this.rModel.variations[0]);
+    this.recipe.variations.push(variation);
   }
 
   deleteIngredient(idx: number) {
@@ -146,6 +132,14 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
     this.recipe.method.forEach((item, idx) => {
       item.step = idx + 1;
     });
+  }
+
+  deleteTag(idx: number) {
+    this.recipe.tags.splice(idx, 1);
+  }
+
+  deleteVariation(idx: number) {
+    this.recipe.variations.splice(idx, 1);
   }
 
   orderIngredients() {
@@ -161,19 +155,27 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   }
 
   onChangeRate(value: number) {
-    // Set the value of the selectUA recipe's rating to the
-    // value passed up from the `rating` component
+    // Set the value of the selectUA recipe's rating to the value passed up from the
+    // `rating` component
     this.recipe.rating = value;
   }
 
   /*
   * @todo remove empty or blacklisted tags or blacklisted chars
   */
-  onSubmit(recipe: RecipeI, next: { emit: Function }) {
-    // final filters return null in place of empty []'s
-    recipe.tags = this.filterTags(recipe.tags);
+  onSubmit(
+    recipe: RecipeI,
+    next: {
+      emit: Function;
+    }
+  ) {
+    // final filters return empty []'s rather than null|undefined,
+    // in order to re-init property in document. ie not passing eg tags: [],
+    // will just set tags: [{}] in collection document
+    recipe.tags = this.filterStrAry(recipe.tags);
     recipe.ingredients = this.filterIngredients(recipe.ingredients);
-    recipe.method = this.filterSteps(recipe.method);
+    recipe.method = this.filterStrAry(recipe.method);
+    recipe.variations = this.filterStrAry(recipe.variations);
 
     if (next && next.emit) {
       next.emit(recipe);
@@ -181,55 +183,46 @@ export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewCheck
   }
 
   openModal() {
-      this.modalActions.emit({ action: 'modal', params: ['open'] });
+    this.modalActions.emit({ action: 'modal', params: ['open'] });
   }
 
   closeModal() {
-      this.modalActions.emit({ action: 'modal', params: ['close'] });
+    this.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 
   private filterIngredients(ingredients) {
-    if (! ingredients || ! ingredients.length) {
-      return;
+    if (!ingredients || !ingredients.length) {
+      return [];
     }
 
     let valids = ingredients.filter((ing, idx, ary) => {
-        if (isEmpty(ing)) {
-          return false;
-        }
-        return ing.qty.trim().length || ing.unit.trim().length || ing.name.trim().length;
-      });
-
-    return isEmpty(valids) ? null : valids;
+      if (isEmpty(ing)) {
+        return false;
+      }
+      return (
+        ing.qty.trim().length ||
+        ing.unit.trim().length ||
+        ing.name.trim().length
+      );
+    });
+    return valids;
   }
 
-  private filterSteps(steps) {
-    if (! steps || steps.length) {
-      return;
+  private filterStrAry(ary) {
+    if (!ary || !ary.length) {
+      return [];
     }
 
-    let valids = steps.filter((step, idx, ary) => {
-        if (isEmpty(step)) {
-          return false;
-        }
-        return step.text.trim().length;
-      });
-
-    return isEmpty(valids) ? null : valids;
-  }
-
-  private filterTags(tags) {
-    if (! tags || ! tags.length) {
-      return;
-    }
-
-    let valids = tags.filter((tag, idx, ary) => {
-        if (isEmpty(tag)) {
-          return false;
-        }
-        return !!tag.text.trim().length;
-      });
-
-    return isEmpty(valids) ? null : valids;
+    let valids = ary.filter((item, idx, ary) => {
+      if (isEmpty(item)) {
+        return false;
+      }
+      if (isObject(item)) {
+        return item.text.trim().length;
+      } else {
+        return item.trim().length;
+      }
+    });
+    return valids;
   }
 }

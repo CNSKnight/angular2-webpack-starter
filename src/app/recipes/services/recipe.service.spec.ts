@@ -10,7 +10,6 @@ import {
 import { MockBackend } from '@angular/http/testing';
 import { provide } from '@angular/core';
 import {
-  Http,
   ConnectionBackend,
   BaseRequestOptions,
   Response,
