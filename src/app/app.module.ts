@@ -113,29 +113,16 @@ export class AppModule {
   }
 
   public hmrOnDestroy(store: StoreType) {
-<<<<<<< HEAD
-    const cmpLocation = this
-      .appRef
-      .components
-      .map((cmp) => cmp.location.nativeElement);
-    // save state
-=======
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     /**
      * Save state
      */
->>>>>>> cf73d5fba7b1526fef5c2ac0ab93397b0db7cf8d
     const state = this.appState._state;
     store.state = state;
     /**
      * Recreate root elements
      */
     store.disposeOldHosts = createNewHosts(cmpLocation);
-<<<<<<< HEAD
-    // save input values
-    store.restoreInputValues = createInputTransfer();
-    // remove styles
-=======
     /**
      * Save input values
      */
@@ -143,7 +130,6 @@ export class AppModule {
     /**
      * Remove styles
      */
->>>>>>> cf73d5fba7b1526fef5c2ac0ab93397b0db7cf8d
     removeNgStyles();
   }
 
