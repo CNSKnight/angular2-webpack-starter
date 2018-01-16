@@ -92,7 +92,7 @@ module.exports = function(env) {
              */
             chunkFilename: '[name].[chunkhash].chunk.js',
 
-            publicPath: '/RecipeDetails/prod/'
+            publicPath: '/RecipeDetails/'
 
         },
 
