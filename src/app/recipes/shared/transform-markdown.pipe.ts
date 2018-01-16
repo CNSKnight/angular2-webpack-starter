@@ -11,7 +11,7 @@ export class TransformMarkdownPipe implements PipeTransform {
   constructor() {
     this.md = MarkdownIt({ html: true, linkify: false, html_inline: true, escape: false });
   }
-  public transform(strMrkdwn: string): string {
-    return this.md.render(strMrkdwn);
+  public transform(strMrkdwn: string|undefined): string {
+    return (strMrkdwn ? this.md.render(strMrkdwn) : '');
   }
 }
