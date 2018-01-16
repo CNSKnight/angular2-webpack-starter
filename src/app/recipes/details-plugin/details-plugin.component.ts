@@ -74,9 +74,10 @@ export class DetailsPluginComponent implements OnInit, OnChanges {
   }
 
   saveRecipe(recipe: RecipeI) {
-    this.recipesService.saveRecipe(recipe);
+    this.recipesService.saveRecipe({...recipe});
     // this.resetRecipe();
   }
+
   resetRecipe() {
     // clone the model and empty the Arrays
     let emptyRecipe = cloneDeep(this.rModel);
