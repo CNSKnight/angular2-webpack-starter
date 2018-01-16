@@ -12,7 +12,7 @@ import { AppState } from './app.service';
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
   // styleUrls: ['./app.component.css'],
-  templateUrl: 'app.component.html'
+  templateUrl: './app.component.html',
   })
 export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
