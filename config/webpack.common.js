@@ -117,7 +117,8 @@ module.exports = function(options) {
                  */
                 {
                     test: /\.ts$/,
-                    use: [{
+                    use: [
+                        {
                             /**
                              *  MAKE SURE TO CHAIN VANILLA JS CODE, I.E. TS COMPILATION OUTPUT.
                              */
@@ -206,14 +207,13 @@ module.exports = function(options) {
                     test: /\.json$/,
                     use: 'json-loader'
                 },
-
-            ],
-
-            loaders: [{
-                test: /jquery\.js/,
-                loader: 'null-loader'
-                    //                exclude: 'node_modules/foundation-sites/'
-            }]
+                {
+                    test: /jquery\.js/,
+                    loader: 'null-loader'
+                    // exclude: 'node_modules/foundation-sites/'
+                }
+            ]
+            
         },
 
         /*
@@ -262,10 +262,10 @@ module.exports = function(options) {
             /**
              * idk
              */
-            new CommonsChunkPlugin({
-             name: 'detailsPlugin',
-             chunks: ['detailsPlugin']
-            }),
+            // new CommonsChunkPlugin({
+            //  name: 'detailsPlugin',
+            //  chunks: ['detailsPlugin']
+            // }),
             /**
              * Specify the correct order the scripts will be injected in
              */
