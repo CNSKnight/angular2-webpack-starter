@@ -21,9 +21,8 @@ declare var window: Window;
 declare var $: any;
 
 @Component({
-  moduleId: (module.id).toString(),
   selector: 'recipe-preview',
-  templateUrl: 'recipe-preview.html',
+  templateUrl: './recipe-preview.html',
   // directives: [Rating]
 })
 export class RecipePreviewComponent implements OnInit,

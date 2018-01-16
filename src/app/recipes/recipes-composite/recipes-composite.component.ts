@@ -21,9 +21,8 @@ import { DetailsPluginComponent } from '../details-plugin/details-plugin.compone
 import { cloneDeep, isArray, forOwn } from 'lodash';
 
 @Component({
-  moduleId: (module.id).toString(),
   selector: 'recipes',
-  templateUrl: 'recipes-composite.html'
+  templateUrl: './recipes-composite.html',
 })
 // snippets:
 // https://marketplace.visualstudio.com/items?itemName=johnpapa.@angular

@@ -23,9 +23,8 @@ declare var Materialize: {
 };
 
 @Component({
-  moduleId: module.id.toString(),
   selector: 'recipe-detail',
-  templateUrl: 'recipe-details.html'
+  templateUrl: './recipe-details.html',
   // directives: [Rating]
 })
 export class RecipeDetailsComponent
@@ -90,7 +89,6 @@ export class RecipeDetailsComponent
     if (!this.recipe.ingredients) {
       this.recipe.ingredients = [];
     }
-
     this.recipe.ingredients.push(clone(this.rModel.ingredients[0]));
   }
 
@@ -176,6 +174,7 @@ export class RecipeDetailsComponent
     recipe.ingredients = this.filterIngredients(recipe.ingredients);
     recipe.method = this.filterStrAry(recipe.method);
     recipe.variations = this.filterStrAry(recipe.variations);
+    recipe.notes = recipe.notes && recipe.notes.trim();
 
     if (next && next.emit) {
       next.emit(recipe);
@@ -213,7 +212,7 @@ export class RecipeDetailsComponent
       return [];
     }
 
-    let valids = ary.filter((item, idx, ary) => {
+    let valids = ary.filter((item, idx, orig) => {
       if (isEmpty(item)) {
         return false;
       }

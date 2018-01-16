@@ -29,9 +29,8 @@ import { RecipeService } from '../services/recipe.service';
 import { cloneDeep, transform, isArray, forOwn } from 'lodash';
 
 @Component({
-  moduleId: module.id.toString(),
   selector: 'details-plugin',
-  templateUrl: 'details-plugin.html',
+  templateUrl: './details-plugin.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../shared/recipes.component.css'],
   encapsulation: ViewEncapsulation.None

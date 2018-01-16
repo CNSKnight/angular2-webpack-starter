@@ -19,9 +19,8 @@ import {
 import { RecipeI } from '../services/recipe.store';
 
 @Component({
-  moduleId: (module.id).toString(),
   selector: 'recipe-list',
-  templateUrl: 'recipe-list.html'
+  templateUrl: './recipe-list.html',
 })
 
 export class RecipeListComponent implements OnInit, OnChanges {
