@@ -59,7 +59,8 @@
     <div class="row">
       <fieldset class="col s12">
         <legend>Ingredients</legend>
-        <ul *ngIf="0==1" materialize="collapsible" class="collapsible" data-collapsible="accordion">
+        <!-- tbc
+        <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
           <li *ngFor="let value of values">
             <div class="collapsible-header">Common Measures, Units, and Abbreviations</div>
             <div class="collapsible-body">
@@ -67,6 +68,7 @@
             </div>
           </li>
         </ul>
+      -->
         <div *ngFor="let ingredient of recipe.ingredients; let idx = index;" ngModelGroup="ingredients">
           <div class="row">
             <div class="input-field col s6 m3">
