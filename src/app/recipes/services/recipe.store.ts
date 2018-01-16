@@ -39,11 +39,14 @@ export interface RecipeI {
   ingredients: Ingredient[];
   method: Method[];
   published: boolean;
+  publishedDate: Date;
+  updatedDate: Date;
   rating: number;
   subTitle: string;
   tags: Tag[];
   title: string;
   variations: Variation[];
+  notes: string;
 };
 
 export const recipeModel: RecipeI = {
@@ -81,5 +84,6 @@ export const recipeModel: RecipeI = {
     {
       text: ''
     }
-  ]
+  ],
+  notes: '',
 };
