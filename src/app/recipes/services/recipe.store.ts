@@ -71,6 +71,8 @@ export const recipeModel: RecipeI = {
     }
   ],
   published: false,
+  publishedDate: undefined,
+  updatedDate: undefined,
   rating: 0,
   subTitle: '',
   tags: [
