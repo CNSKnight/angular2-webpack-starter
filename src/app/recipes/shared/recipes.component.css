@@ -45,7 +45,7 @@
 
 .recipes.collection .collection-item.active,
 .recipes.collection .card.active {
-    border-left-color: rgb(0, 150, 136);
+    border-left-color: rgb(158, 157, 36);
 }
 
 .recipes.collection .collection-item.active {
@@ -54,16 +54,16 @@
 
 .recipes.collection .collection-item.active,
 .recipes.collection .collection-item.active .secondary-content {
-    color: rgb(0, 150, 136);
+    color: rgb(158, 157, 36);
 }
 
 legend,
 .legend {
-    color: rgb(0, 150, 136);
+    color: rgb(158, 157, 36);
 }
 
 .recipe-card [ngmodelgroup]+[ngmodelgroup] {
-    border-top: 3px solid rgb(178, 223, 219);
+    border-top: 3px dashed rgb(224, 224, 224);
 }
 
 .recipe-card fieldset .row {
@@ -83,7 +83,6 @@ recipes .modal {
     line-height: 2em;
     padding: 0 1em;
 }
-
 
 /* preview */
 
@@ -106,4 +105,27 @@ recipes .modal {
 .highlight,
 .tip-title {
     color: rgb(136, 27, 237);
+}
+.btn.grey.lighten-5 {
+  color: rgb(255, 152, 0) !important;
+}
+.btn.grey.lighten-5 i {
+  color: rgb(175, 180, 43) !important;
+}
+.switch .lever {
+  background-color: rgb(192, 202, 51);
+}
+.switch .lever:after {
+  background-color: rgb(175, 180, 43);
+}
+.switch label,
+form .input-field label.active,
+form .input-field .select-wrapper + label,
+form .input-field input[type="checkbox"] + label {
+    color: rgb(136, 27, 237);
+}
+/* fix mat* regression bug */
+form .input-field input[type="checkbox"] + label {
+    color: rgb(136, 27, 237);
+    pointer-events: auto;
 }
