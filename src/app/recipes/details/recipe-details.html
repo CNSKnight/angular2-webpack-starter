@@ -1,25 +1,20 @@
 <div *ngIf="! recipe;">
-    <h3>No recipe was provided. Please return to the listing and choose again or Add.</h3>
+  <h3>No recipe was provided. Please return to the listing and choose again or Add.</h3>
 </div>
 <div *ngIf="recipe;" #recipeBloc materialize class="recipe-card">
-    <div>
-        <h5 *ngIf="recipe.id">Editing</h5>
-        <h5 *ngIf="! recipe.id">Creating</h5>
-        <h4 ngClass="highlight">{{originalTitle}}</h4>
-    </div>
-    <form #rdForm="ngForm" (ngSubmit)="onSubmit(recipe, saveUA)">
+  <form #rdForm="ngForm" (ngSubmit)="onSubmit(recipe, saveUA)">
 
-        <div class="center-align">
-            <div class="switch">
-                <label>
+    <div class="center-align">
+      <div class="switch">
+        <label>
           Un-Published
           <input name="published" [(ngModel)]="recipe.published" type="checkbox">
           <span class="lever"></span> Published
         </label>
-            </div>
-        </div>
+      </div>
+    </div>
 
-        <!--We're not allowing title to be set in this form
+    <!--We're not allowing title to be set in this form
         <div class="row">
             <div class="input-field col s12">
                 <input class="validate" name="title" [(ngModel)]="recipe.title" placeholder="Recipe Name/Title" type="text" ngControl="title" required>
@@ -33,159 +28,177 @@
         </div>
         -->
 
-        <div class="row">
-            <div class="input-field col s12">
-                <input class="" name="subTitle" [(ngModel)]="recipe.subTitle" placeholder="Recipe Sub-Title" type="text">
-                <label>Recipe Sub-Title <em>(optional)</em></label>
-            </div>
-        </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input class="" name="subTitle" [(ngModel)]="recipe.subTitle" placeholder="Recipe Sub-Title" type="text">
+        <label>Recipe Sub-Title
+          <em>(optional)</em>
+        </label>
+      </div>
+    </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <input name="creator" [(ngModel)]="recipe.creator" placeholder="Creator Name/Attribution" type="text">
-                <label>Original Creator</label>
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="creator" [(ngModel)]="recipe.creator" placeholder="Creator Name/Attribution" type="text">
+        <label>Original Creator</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="originalUrl" [(ngModel)]="recipe.originalUrl" placeholder="Address where originally published" type="url">
+        <label>Originaly Published URL</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea class="materialize-textarea" name="description" placeholder="Brief and Catchy Description" rows="2" [(ngModel)]="recipe.description"></textarea>
+        <label>Description</label>
+      </div>
+    </div>
+    <!--rating-comp-->
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Ingredients</legend>
+        <ul *ngIf="0==1" materialize="collapsible" class="collapsible" data-collapsible="accordion">
+          <li *ngFor="let value of values">
+            <div class="collapsible-header">Common Measures, Units, and Abbreviations</div>
+            <div class="collapsible-body">
+              <p>{{value}}</p>
             </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input name="originalUrl" [(ngModel)]="recipe.originalUrl" placeholder="Address where originally published" type="url">
-                <label>Originaly Published URL</label>
+          </li>
+        </ul>
+        <div *ngFor="let ingredient of recipe.ingredients; let idx = index;" ngModelGroup="ingredients">
+          <div class="row">
+            <div class="input-field col s6 m3">
+              <input name="ing-{{idx}}-qty" [(ngModel)]="ingredient.qty" placeholder="qty?" type="text">
             </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea class="materialize-textarea" name="description" placeholder="Brief and Catchy Description" rows="2" [(ngModel)]="recipe.description"></textarea>
-                <label>Description</label>
+            <div class="input-field col s6 m3">
+              <input name="ing-{{idx}}-unit" [(ngModel)]="ingredient.unit" placeholder="Units?" type="text">
             </div>
-        </div>
-        <!--rating-comp-->
-        <div class="row">
-            <fieldset class="col s12">
-                <legend>Ingredients</legend>
-                <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-                    <li *ngFor="let value of values">
-                        <div class="collapsible-header">Common Measures, Units, and Abbreviations</div>
-                        <div class="collapsible-body">
-                            <p>{{value}}</p>
-                        </div>
-                    </li>
-                </ul>
-                <div *ngFor="let ingredient of recipe.ingredients; let idx = index;" ngModelGroup="ingredients">
-                    <div class="row">
-                        <div class="input-field col s6 m3">
-                            <input name="ing-{{idx}}-qty" [(ngModel)]="ingredient.qty" placeholder="qty?" type="text">
-                        </div>
-                        <div class="input-field col s6 m3">
-                            <input name="ing-{{idx}}-unit" [(ngModel)]="ingredient.unit" placeholder="Units?" type="text">
-                        </div>
-                        <div class="input-field col s6 m3 center-align">
-                            <input id="ing-{{idx}}-opt" name="ing-{{idx}}-opt" [(ngModel)]="ingredient.optional" placeholder="optional?" type="checkbox">
-                            <label htmlFor="ing-{{idx}}-opt">Optional?</label>
-                        </div>
-                        <div class="input-field col s6 m3 center-align">
-                            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteIngredient(idx)">
+            <div class="input-field col s6 m3 center-align">
+              <input id="ing-{{idx}}-opt" name="ing-{{idx}}-opt" [(ngModel)]="ingredient.optional" placeholder="optional?" type="checkbox">
+              <label htmlFor="ing-{{idx}}-opt">Optional?</label>
+            </div>
+            <div class="input-field col s6 m3 center-align">
+              <button class="btn-flat btn-sm red-text" type="button" (click)="deleteIngredient(idx)">
                 <i class="material-icons">delete</i>
               </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <input name="ing-{{idx}}-name" [(ngModel)]="ingredient.name" placeholder="Name?" type="text">
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input name="ing-{{idx}}-prep" [(ngModel)]="ingredient.preparation" placeholder="Preparation?" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 center-align">
-                        <button class="btn btn-sm" type="button" (click)="newIngredient()">
-              <i class="material-icons">add</i>
-            </button>
-                    </div>
-                </div>
-            </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input name="ing-{{idx}}-name" [(ngModel)]="ingredient.name" placeholder="Name?" type="text">
+            </div>
+            <div class="input-field col s12 m6">
+              <input name="ing-{{idx}}-prep" [(ngModel)]="ingredient.preparation" placeholder="Preparation?" type="text">
+            </div>
+          </div>
         </div>
         <div class="row">
-            <fieldset class="col s12">
-                <legend>Method Steps</legend>
-                <div class="row" *ngFor="let method of recipe.method; let idx = index;">
-                    <input name="method-{{idx}}-step" [(ngModel)]="method.step" hidden>
-                    <div class="input-field col s12 m10">
-                        <textarea class="materialize-textarea" [attr.id]="getTAID(recipe.id, idx)" name="method-{{idx}}-text" [(ngModel)]="method.text" placeholder="Step Content"></textarea>
-                        <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
-                    </div>
-                    <div class="input-field col s12 m2 center-align">
-                        <button class="btn-flat btn-sm red-text" type="button" (click)="deleteMethod(idx)">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm grey lighten-5" type="button" (click)="newIngredient()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Method Steps</legend>
+        <div class="row" *ngFor="let method of recipe.method; let idx = index;">
+          <input name="method-{{idx}}-step" [(ngModel)]="method.step" hidden>
+          <div class="input-field col s12 m10">
+            <textarea class="materialize-textarea" [attr.id]="getTAID(recipe.id, idx)" name="method-{{idx}}-text" [(ngModel)]="method.text"
+              placeholder="Step Content"></textarea>
+            <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
+          </div>
+          <div class="input-field col s12 m2 center-align">
+            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteMethod(idx)">
               <i class="material-icons">delete</i>
             </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 center-align">
-                        <button class="btn btn-sm" type="button" (click)="newMethod()">
-              <i class="material-icons">add</i>
-            </button>
-                    </div>
-                </div>
-            </fieldset>
+          </div>
         </div>
         <div class="row">
-            <fieldset class="col s12">
-                <legend>Recipe Variations</legend>
-                <div class="row" *ngFor="let variation of recipe.variations; let idx = index;">
-                    <div class="input-field col s12 m10">
-                        <textarea class="materialize-textarea" name="variations-{{idx}}" [(ngModel)]="variation.text" placeholder="Variation Content"></textarea>
-                    </div>
-                    <div class="input-field col s12 m2 center-align">
-                        <button class="btn-flat btn-sm red-text" type="button" (click)="deleteVariation(idx)">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm grey lighten-5" type="button" (click)="newMethod()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Recipe Variations</legend>
+        <div class="row" *ngFor="let variation of recipe.variations; let idx = index;">
+          <div class="input-field col s12 m10">
+            <textarea class="materialize-textarea" name="variations-{{idx}}" [(ngModel)]="variation.text" placeholder="Variation Content"></textarea>
+          </div>
+          <div class="input-field col s12 m2 center-align">
+            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteVariation(idx)">
               <i class="material-icons">delete</i>
             </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 center-align">
-                        <button class="btn btn-sm" type="button" (click)="newVariation()">
-              <i class="material-icons">add</i>
-            </button>
-                    </div>
-                </div>
-            </fieldset>
+          </div>
         </div>
         <div class="row">
-            <fieldset class="col s12">
-                <legend>Tags</legend>
-                <div class="row">
-                    <div *ngFor="let tag of recipe.tags; let idx = index;">
-                        <div class="input-field col s8">
-                            <input name="tag-{{idx}}-text" [(ngModel)]="tag.text" placeholder="Hash-Tag" type="text">
-                        </div>
-                        <div class="input-field col s4 center-align">
-                            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteTag(idx)">
-                <i class="material-icons">delete</i>
-              </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 center-align">
-                        <button class="btn btn-sm" type="button" (click)="newTag()">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm grey lighten-5" type="button" (click)="newVariation()">
               <i class="material-icons">add</i>
             </button>
-                    </div>
-                </div>
-            </fieldset>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Tags</legend>
+        <div class="row" *ngFor="let tag of recipe.tags; let idx = index;">
+          <div class="input-field col s8">
+            <input name="tag-{{idx}}-text" [(ngModel)]="tag.text" placeholder="Hash-Tag" type="text">
+          </div>
+          <div class="input-field col s4 center-align">
+            <button class="btn-flat btn-sm red-text" type="button" (click)="deleteTag(idx)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
         </div>
         <div class="row">
-            <div class="col s4 center-align">
-                <button class="btn-flat" type="button" (click)="cancelUA.emit(recipe)">Cancel</button>
-            </div>
-            <div class="col s4 center-align">
-                <button *ngIf="recipe.id" type="button" class="btn waves-effect waves-light light-green lighten-3 modal-trigger" data-target="#rPrevModal" (click)="openModal()">Preview</button>
-            </div>
-            <div class="col s4 center-align">
-                <button class="btn waves-effect waves-light" type="submit" [disabled]="! rdForm.valid">Save</button>
-            </div>
+          <div class="col s12 center-align">
+            <button class="btn btn-sm grey lighten-5" type="button" (click)="newTag()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
         </div>
-    </form>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>*Notes</legend>
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea class="materialize-textarea" name="note" [(ngModel)]="recipe.notes" placeholder="Enter Notes...">
+            </textarea>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <div class="col s4 center-align">
+        <button class="btn-flat red-text" type="button" (click)="cancelUA.emit(recipe)">
+          <i class="material-icons left">cancel</i> Cancel
+        </button>
+      </div>
+      <div class="col s4 center-align">
+        <button *ngIf="recipe.id" type="button" class="btn-flat lime-text text-darken-3 modal-trigger" data-target="#rPrevModal" (click)="openModal()">
+          <i class="material-icons left">remove_red_eye</i> Preview
+        </button>
+      </div>
+      <div class="col s4 center-align">
+        <button class="btn waves-effect waves-light grey lighten-5" type="submit" [disabled]="! rdForm.valid">
+          <i class="material-icons left">save</i> Save
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
