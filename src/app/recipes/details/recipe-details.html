@@ -1,19 +1,20 @@
-<div *ngIf="! recipe;">
+<div *ngIf="! recipe">
   <h3>No recipe was provided. Please return to the listing and choose again or Add.</h3>
 </div>
-<div *ngIf="recipe;" #recipeBloc materialize class="recipe-card">
+<div *ngIf="recipe" #recipeBloc materialize class="recipe-card">
   <form #rdForm="ngForm" (ngSubmit)="onSubmit(recipe, saveUA)">
-
-    <div class="center-align">
-      <div class="switch">
-        <label>
-          Un-Published
-          <input name="published" [(ngModel)]="recipe.published" type="checkbox">
-          <span class="lever"></span> Published
-        </label>
+    <ng-container *ngTemplateOutlet="actionsBar"></ng-container>
+    <div class="row">
+      <div class="col s12 center-align">
+        <div class="switch">
+          <label>
+            Un-Published
+            <input name="published" [(ngModel)]="recipe.published" type="checkbox">
+            <span class="lever"></span> Published
+          </label>
+        </div>
       </div>
     </div>
-
     <!--We're not allowing title to be set in this form
         <div class="row">
             <div class="input-field col s12">
@@ -185,22 +186,27 @@
         </div>
       </fieldset>
     </div>
-    <div class="row">
-      <div class="col s4 center-align">
-        <button class="btn-flat red-text" type="button" (click)="cancelUA.emit(recipe)">
-          <i class="material-icons left">cancel</i> Cancel
-        </button>
+    <ng-container *ngTemplateOutlet="actionsBar"></ng-container>
+
+    <ng-template #actionsBar>
+      <div class="row">
+        <div class="col s4 center-align">
+          <button class="btn-flat red-text" type="button" (click)="cancelUA.emit(recipe)">
+            <i class="material-icons left">cancel</i> Cancel
+          </button>
+        </div>
+        <div class="col s4 center-align">
+          <button *ngIf="recipe.id" type="button" class="btn-flat lime-text text-darken-3 modal-trigger" data-target="#rPrevModal"
+            (click)="openModal()">
+            <i class="material-icons left">remove_red_eye</i> Preview
+          </button>
+        </div>
+        <div class="col s4 center-align">
+          <button class="btn waves-effect waves-light grey lighten-5" type="submit" [disabled]="! rdForm.valid">
+            <i class="material-icons left">save</i> Save
+          </button>
+        </div>
       </div>
-      <div class="col s4 center-align">
-        <button *ngIf="recipe.id" type="button" class="btn-flat lime-text text-darken-3 modal-trigger" data-target="#rPrevModal" (click)="openModal()">
-          <i class="material-icons left">remove_red_eye</i> Preview
-        </button>
-      </div>
-      <div class="col s4 center-align">
-        <button class="btn waves-effect waves-light grey lighten-5" type="submit" [disabled]="! rdForm.valid">
-          <i class="material-icons left">save</i> Save
-        </button>
-      </div>
-    </div>
+    </ng-template>
   </form>
 </div>
