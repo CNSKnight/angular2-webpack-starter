@@ -10,16 +10,16 @@ import { Injectable } from "@angular/core";
 import { Observable, Subscribable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
-import "rxjs/add/operator/catch";
+import 'rxjs/add/operator/catch';
 
-import { RecipeI, RecipesStoreI, recipeModel } from "./recipe.store";
-import servicesENV from "../../../../config/services.ENV";
+import { RecipeI, RecipesStoreI, recipeModel } from './recipe.store';
+import servicesENV from '../../../../config/services.ENV';
 
-import { clone, assign, partial } from "lodash";
+import { clone, assign, partial } from 'lodash';
 
 const HEADER = {
   headers: new Headers({
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
   })
 };
 
@@ -39,26 +39,29 @@ export class RecipeService {
   preAuthBase: string;
   contUnitsMgr: any;
 
+  private isProd = process.env.NODE_ENV === 'prod';
   // Inject the `AppStore` into the constructor with a type of `AppStore`
   constructor(private http: Http, private store: Store<RecipesStoreI>) {
     // Bind an observable of our `recipes` to `RecipeService`
     // Since this is essentially a `key, value` system, we can
     // set our `recipes` by calling `store.select('recipes')`
-    this.recipesR = store.select("recipesR");
+    this.recipesR = store.select('recipesR');
 
-    this.apiBase =
-      (servicesENV.recipesAPIBase || location.origin) + "/api/recipes";
+    this.apiBase = servicesENV.recipesAPIBase;
 
-    this.findOneBase = this.apiBase + "/findOne";
-    this.preAuthBase = this.apiBase + "/preAuth";
+    this.findOneBase = this.apiBase + '/findOne';
+    this.preAuthBase = this.apiBase;
+    if (this.isProd) {
+       this.preAuthBase += '/preAuth';
+    }
 
     this.contUnitsMgr =
-      (typeof acap !== "undefined" &&
-        acap.ADMIN_TAPPADS &&
-        acap.ADMIN_TAPPADS.contUnitsMgr) ||
       (parent.acap &&
         parent.acap.ADMIN_TAPPADS &&
-        parent.acap.ADMIN_TAPPADS.contUnitsMgr);
+        parent.acap.ADMIN_TAPPADS.contUnitsMgr) ||
+      (typeof acap !== 'undefined' &&
+        acap.ADMIN_TAPPADS &&
+        acap.ADMIN_TAPPADS.contUnitsMgr);
   }
 
   // used outside of listing context to load a single
@@ -74,7 +77,7 @@ export class RecipeService {
         let tmpRecipe = clone(recipeModel);
         tmpRecipe.acapID = info.ad_unit_id;
         tmpRecipe.title = info.ad_unit_name;
-        this.store.dispatch({ type: "SELECT_RECIPE", payload: tmpRecipe });
+        this.store.dispatch({ type: 'SELECT_RECIPE', payload: tmpRecipe });
       }
     }
 
@@ -121,6 +124,9 @@ export class RecipeService {
 
   // all save methods proxy through acapF for authorization
   saveRecipe(recipe: RecipeI) {
+    if (! this.isProd && ! recipe.title) {
+      recipe.title='Tester';
+    }
     recipe.id ? this.updateRecipe(recipe) : this.createRecipe(recipe);
   }
 
@@ -134,11 +140,10 @@ export class RecipeService {
     delete recipe.id;
     recipe.acapID = info.ad_unit_id;
     recipe.title = info.ad_unit_name;
-
-    let params = {
+    let params = this.isProd ? {
       recipe,
       actionStatus: 'cont-units:recipes:add'
-    };
+    } : recipe;
 
     this.http
       .post(this.preAuthBase, JSON.stringify(params), HEADER)
@@ -153,10 +158,10 @@ export class RecipeService {
     let url = `${this.preAuthBase}/${recipe.id}`;
     delete recipe.id;
 
-    let params = {
+    let params = this.isProd ? {
       recipe,
       actionStatus: 'cont-units:recipes:update'
-    };
+    } : recipe;
 
     this.http
       .put(url, JSON.stringify(params), HEADER)
