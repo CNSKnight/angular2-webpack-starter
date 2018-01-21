@@ -2,74 +2,76 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>
-        Recipe Details Module
-    </title>
-    <base href="">
-    <!-- base cannot diverge from parent -->
-    <!--base href="/"-->
-    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <%/* rather the cdn version of materialize.css, we're using CLIENT default, matching the parent page */%>
+  <title>
+    Recipe Details Module
+  </title>
+  <base href="">
+  <!-- base cannot diverge from parent -->
+  <!--base href="/"-->
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <%/* rather the cdn version of materialize.css, we're using CLIENT default, matching the parent page */%>
     <link rel="stylesheet" href="/themes/default/css/materialize.css">
     <%/* these match parent page as well */%>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 
 <body>
-    <plugin>Loading Plugin...</plugin>
-    <% if (htmlWebpackPlugin.options.metadata.isDevServer) { %>
-        <script>
-            acap = {
-                ADMIN_TAPPADS: {
-                    contUnitsMgr: {
-                        getInfo: function() {
-                            return {
-                                ad_unit_id: 27,
-                                ad_unit_name: '_Nu_Testr_'
-                            };
-                        },
-                        setMessages: function(msg) {
-                          console.log(msg);
-                        }
-                    }
-                }
-            };
-        </script>
-        <% } else { %>
-            <script>
-                (function(parent) {
-                    if (!"MutationObserver" in window) return;
-                    try {
-                        var details = parent.acap.ADMIN_TAPPADS.contUnitsMgr.details;
-                        var lastHgt;
-                        if (details) {
-                            details.onMuts = function(mutation) {
-                                var hgt = document.body.clientHeight;
-                                if (hgt < 900 || lastHgt == hgt) return; // matches parent container min-height;
-                                details.setIframeWrapperHgt(hgt + 20);
-                                lastHgt = hgt;
-                            };
+  <plugin>Loading Plugin...</plugin>
+  <% if (htmlWebpackPlugin.options.metadata.isDevServer) { %>
+    <script>
+      acap = {
+        ADMIN_TAPPADS: {
+          contUnitsMgr: {
+            getInfo: function () {
+              return {
+                ad_unit_id: 27,
+                ad_unit_name: '_Nu_Testr_'
+              };
+            },
+            setMessages: function (msg) {
+              console.log(msg);
+            }
+          }
+        }
+      };
+    </script>
+    <% } else { %>
+      <script>
+        (function (parent) {
+          if (!"MutationObserver" in window || !parent.acap) return;
+          try {
+            var acap = parent.acap;
+            var contUnitsMgr = acap && acap.ADMIN_TAPPADS && acap.ADMIN_TAPPADS.contUnitsMgr;
+            if (contUnitsMgr && contUnitsMgr.details) {
+              var details = contUnitsMgr.details;
+              var lastHgt;
+              details.onMuts = function (mutation) {
+                var hgt = document.body.clientHeight;
+                if (hgt < 900 || lastHgt == hgt) return; // matches parent container min-height;
+                details.setIframeWrapperHgt(hgt + 20);
+                lastHgt = hgt;
+              };
 
-                            var observer = new MutationObserver(function(mutations) {
-                                mutations.forEach(details.onMuts);
-                            });
+              var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(details.onMuts);
+              });
 
-                            observer.observe(document.body, {
-                                childList: true,
-                                subTree: true
-                            });
-                        }
-                    } catch (except) {
-                        console.log(except.message);
-                    }
-                })(window.parent);
-            </script>
-            <% } %>
+              observer.observe(document.body, {
+                childList: true,
+                subTree: true
+              });
+            }
+          } catch (except) {
+            console.log(except.message);
+          }
+        })(window.parent);
+      </script>
+      <% } %>
 </body>
 
 </html>
