@@ -40,7 +40,25 @@
     <app>
         Loading...
     </app>
-
+    <% if (htmlWebpackPlugin.options.metadata.isDevServer) { %>
+      <script>
+          acap = {
+              ADMIN_TAPPADS: {
+                  contUnitsMgr: {
+                      getInfo: function() {
+                          return {
+                              ad_unit_id: 27,
+                              ad_unit_name: '_Nu_Testr_'
+                          };
+                      },
+                      setMessages: function(msg) {
+                        console.log(msg);
+                      }
+                  }
+              }
+          };
+      </script>
+<% } %>
     <!-- Scripts will be injected by webpack here -->
 </body>
 
