@@ -33,6 +33,7 @@ interface Variation {
 export interface RecipeI {
   id: string; // supplied by Loopback via ObjectID
   acapID: Number;
+  creationDate: Date;
   creator: string;
   originalUrl: string;
   description: string;
@@ -53,6 +54,7 @@ export const recipeModel: RecipeI = {
   id: undefined,
   acapID: null,
   creator: '',
+  creationDate: undefined,
   originalUrl: '',
   description: '',
   ingredients: [
