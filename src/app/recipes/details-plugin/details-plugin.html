@@ -1,10 +1,21 @@
 <div class="row">
-    <div class="col s12">
-        <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [recipe]="selectedRecipeR | async" [modalActions]="modalActions">Choose recipe from listing...
-        </recipe-detail>
-    </div>
+  <div class="col s12">
+    <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [recipe]="selectedRecipeR | async" [modalActions]="modalActions">Choose recipe from listing...
+    </recipe-detail>
+  </div>
 </div>
-<div id="rPrevModal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true, starting_top:'1%', ending_top: '3%'}]" [materializeActions]="modalActions">
-    <recipe-preview [recipe]="selectedRecipeR | async">
-    </recipe-preview>
+<div id="rPrevModal" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: true, starting_top:'1%', ending_top: '3%'}]"
+  [materializeActions]="modalActions">
+  <div class="modal-content">
+    <recipe-preview [recipe]="selectedRecipeR | async"></recipe-preview>
+  </div>
+  <div class="modal-footer align-center ">
+    <p class="left ">
+      <i class="material-icons amber-text text-accent-4 left">warning</i>
+      Note: This preview will not reflect any unsaved changes.</p>
+    <a class="btn-flat modal-close ">
+      <i class="material-icons left">close</i>
+      Dismiss
+    </a>
+  </div>
 </div>
