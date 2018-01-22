@@ -78,7 +78,10 @@ export class DetailsPluginComponent implements OnInit, OnChanges {
     // this.resetRecipe();
   }
 
-  resetRecipe() {
+  /**
+   * this may not be relevant in the details-plugin
+   */
+  cancelRecipe() {
     // clone the model and empty the Arrays
     let emptyRecipe = cloneDeep(this.rModel);
     // emptyRecipe = transform(emptyRecipe, (accum, val, idx) => {
@@ -90,8 +93,14 @@ export class DetailsPluginComponent implements OnInit, OnChanges {
     });
 
     this.store.dispatch({
-      type: 'SELECT_RECIPE',
+      type: 'CANCEL_RECIPE',
       payload: emptyRecipe
+    });
+  }
+
+  resetRecipe() {
+    this.store.dispatch({
+      type: 'RESET_RECIPE'
     });
   }
 }

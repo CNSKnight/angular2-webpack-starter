@@ -190,9 +190,14 @@
 
     <ng-template #actionsBar>
       <div class="row">
-        <div class="col s4 center-align">
+        <div *ngIf="!recipe.id" class="col s4 center-align">
           <button class="btn-flat red-text" type="button" (click)="cancelUA.emit(recipe)">
             <i class="material-icons left">cancel</i> Cancel
+          </button>
+        </div>
+        <div class="col s4 center-align">
+          <button class="btn-flat red-text" type="button" (click)="resetUA.emit(recipe)" title="Removes all changes since last save.">
+            <i class="material-icons left">restore</i> Reset
           </button>
         </div>
         <div class="col s4 center-align">

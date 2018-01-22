@@ -9,33 +9,37 @@ import {
   Output,
   ChangeDetectionStrategy,
   ViewEncapsulation
-} from '@angular/core';
+} from "@angular/core";
 
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import { Observable } from "rxjs/Observable";
+import { Store } from "@ngrx/store";
 
-import { recipeModel, RecipeI, RecipesStoreI } from '../services/recipe.store';
-import { RecipeService } from '../services/recipe.service';
-import { DetailsPluginComponent } from '../details-plugin/details-plugin.component';
+import { recipeModel, RecipeI, RecipesStoreI } from "../services/recipe.store";
+import { RecipeService } from "../services/recipe.service";
+import { DetailsPluginComponent } from "../details-plugin/details-plugin.component";
 
 import { cloneDeep, isArray, forOwn } from 'lodash';
 
 @Component({
   selector: 'recipes',
-  templateUrl: './recipes-composite.html',
+  templateUrl: './recipes-composite.html'
 })
 // snippets:
 // https://marketplace.visualstudio.com/items?itemName=johnpapa.@angular
-export class RecipesCompositeComponent extends DetailsPluginComponent implements OnInit, OnChanges {
+export class RecipesCompositeComponent extends DetailsPluginComponent
+  implements OnInit, OnChanges {
   showCards: boolean = false;
   id: number = null;
   isPreAuth: boolean = null;
-  constructor(protected recipesService: RecipeService, protected store: Store<RecipesStoreI>) {
+  constructor(
+    protected recipesService: RecipeService,
+    protected store: Store<RecipesStoreI>
+  ) {
     super(recipesService, store);
     this.resetRecipe();
     // this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
     // this.selectedRecipeR.subscribe(this.selectRecipe.bind(this));
-    this.isPreAuth = !! recipesService.preAuthBase;
+    this.isPreAuth = !!recipesService.preAuthBase;
   }
 
   // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event to our store
@@ -44,42 +48,44 @@ export class RecipesCompositeComponent extends DetailsPluginComponent implements
     this.recipesService.loadRecipes();
   }
 
-  ngOnChanges(changed: any) { }
+  ngOnChanges(changed: any) {}
 
   toggle(what: string) {
     if (what === 'cards') {
-      this.showCards = (this.showCards
-        ? false
-        : true);
+      this.showCards = this.showCards ? false : true;
     }
   }
 
   selectRecipe(recipe: RecipeI) {
-    this
-      .store
-      .dispatch({ type: 'SELECT_RECIPE', payload: recipe });
+    this.store.dispatch({ type: 'SELECT_RECIPE', payload: recipe });
   }
 
   deleteRecipe(recipe: RecipeI) {
-    this
-      .recipesService
-      .deleteRecipe(recipe);
+    this.recipesService.deleteRecipe(recipe);
   }
 
-  resetRecipe() {
+  /**
+   * CANCEL_RECIPE is intended to cancel an Add
+   */
+  cancelRecipe() {
     // clone the model and empty the Arrays
     let emptyRecipe = cloneDeep(this.rModel);
     // emptyRecipe = transform(emptyRecipe, (accum, val, idx) => {     accum[idx] =
     // isArray(val) ? [] : val;   });
 
     forOwn(emptyRecipe, (val: any, idx: any) => {
-      val = isArray(val)
-        ? []
-        : val;
+      val = isArray(val) ? [] : val;
     });
 
-    this
-      .store
-      .dispatch({ type: 'SELECT_RECIPE', payload: emptyRecipe });
+    this.store.dispatch({
+      type: 'CANCEL_RECIPE',
+      payload: emptyRecipe
+    });
+  }
+
+  resetRecipe() {
+    this.store.dispatch({
+      type: 'RESET_RECIPE'
+    });
   }
 }

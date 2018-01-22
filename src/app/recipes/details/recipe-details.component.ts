@@ -50,6 +50,7 @@ export class RecipeDetailsComponent
   // Allow the user to save/delete a `recipe or cancel the operation. Flow events
   // up from here.
   @Output() saveUA = new EventEmitter();
+  @Output() resetUA = new EventEmitter();
   @Output() cancelUA = new EventEmitter();
 
   constructor() {

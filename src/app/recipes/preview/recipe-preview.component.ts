@@ -28,12 +28,6 @@ declare var $: any;
 export class RecipePreviewComponent implements OnInit, OnChanges {
   @Input() recipe: RecipeI;
 
-  // Allow the user to save/delete a `recipe or cancel the operation. Flow events
-  // up from here.
-  @Output() saveUA = new EventEmitter();
-  @Output() cancelUA = new EventEmitter();
-  constructor() {}
-
   ngOnInit() {
     // hacks window.$ = window.jQuery; let $modal = window.$('.modal');
     // $modal.length && $modal.modal();

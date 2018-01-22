@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col s12">
-    <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [recipe]="selectedRecipeR | async" [modalActions]="modalActions">Choose recipe from listing...
+    <recipe-detail (saveUA)="saveRecipe($event)" (resetUA)="resetRecipe($event)" (cancelUA)="cancelRecipe($event)" [recipe]="selectedRecipeR | async" [modalActions]="modalActions">Choose recipe from listing...
     </recipe-detail>
   </div>
 </div>
