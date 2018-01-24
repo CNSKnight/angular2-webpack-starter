@@ -39,7 +39,7 @@ export class RecipeService {
   preAuthBase: string;
   contUnitsMgr: any;
 
-  private isProd = process.env.NODE_ENV === 'prod';
+  private isProd = process.env.NODE_ENV === 'production';
   // Inject the `AppStore` into the constructor with a type of `AppStore`
   constructor(private http: Http, private store: Store<RecipesStoreI>) {
     // Bind an observable of our `recipes` to `RecipeService`
@@ -125,7 +125,7 @@ export class RecipeService {
   // all save methods proxy through acapF for authorization
   saveRecipe(recipe: RecipeI) {
     if (! this.isProd && ! recipe.title) {
-      recipe.title='Tester';
+      recipe.title = 'Tester';
     }
     recipe.id ? this.updateRecipe(recipe) : this.createRecipe(recipe);
   }
